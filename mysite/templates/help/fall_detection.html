@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>摔倒识别</title>
+    <!-- 返回按钮 -->
+    <a href="/help" class="floating-button">返回</a>
+
+    <style>
+        /* 设置页面背景 */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://picsum.photos/1920/1080');
+        }
+
+        /* 设置容器样式 */
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.6); /* 设置容器背景颜色和透明度 */
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); /* 设置容器阴影 */
+            position: absolute; /* 设置容器相对于视口的绝对定位 */
+            top: 50%; /* 设置容器顶部相对于视口的位置 */
+            left: 50%; /* 设置容器左侧相对于视口的位置 */
+            transform: translate(-50%, -50%); /* 通过transform属性将容器居中显示 */
+        }
+
+        /* 设置按钮样式 */
+        .btn {
+            padding: 10px 20px;
+            background-color: #007bff; /* 设置按钮背景颜色 */
+            border: none; /* 移除按钮边框 */
+            border-radius: 5px; /* 设置按钮圆角 */
+            color: #fff; /* 设置按钮文字颜色 */
+            cursor: pointer; /* 设置鼠标悬停时的样式为手型 */
+        }
+
+        /* 设置按钮悬停时的背景颜色 */
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* 设置隐藏视频元素 */
+        #video {
+            display: none; /* 默认隐藏视频元素 */
+        }
+
+        /* 设置显示视频元素 */
+        #canvas {
+            width: 300px; /* 设置Canvas宽度为400像素 */
+            height: 250px; /* 设置Canvas高度为300像素 */
+            display: block; /* 默认显示canvas元素 */
+            margin-top: 20px; /* 设置canvas元素的顶部外边距 */
+            border-radius: 10px; /* 设置canvas元素的圆角 */
+        }
+
+        /*浮动按钮的css设置*/
+        .floating-button {
+            position: fixed;
+            bottom: 20px; /* 按钮距离页面底部的距离 */
+            right: 20px; /* 按钮距离页面右侧的距离 */
+            width: 60px; /* 按钮的宽度 */
+            height: 60px; /* 按钮的高度 */
+            border-radius: 50%; /* 将按钮设置为圆形 */
+            background-color: #c26464; /* 按钮的背景颜色 */
+            color: white; /* 按钮上文字的颜色 */
+            font-size: 20px; /* 按钮上文字的大小 */
+            text-align: center; /* 按钮上文字居中 */
+            line-height: 60px; /* 按钮上文字的行高 */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* 按钮的阴影效果 */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease; /* 按钮背景颜色和阴影的过渡效果 */
+            text-decoration: none; /* 取消下划线 */
+        }
+
+        .floating-button:hover {
+            background-color: #2962ff; /* 鼠标悬停时按钮的背景颜色 */
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7); /* 鼠标悬停时按钮的阴影效果 */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 style="text-align: center;">摔倒识别</h1>
+    <p>点击下方按钮检测摔倒情况</p>
+    <button class="btn" onclick="checkFall()" style="display: block; margin: 0 auto;">摔倒检测</button>
+</div>
+
+<!-- 新增视频元素 -->
+<video id="video" autoplay></video>
+<canvas id="canvas"></canvas>
+
+<script>
+    /*获取摄像头访问权限代码*/
+    function checkFall() {
+        // 请求访问用户摄像头
+        navigator.mediaDevices.getUserMedia({video: true})
+            .then(function (stream) {
+                window.location.href = '/help/fall_detection/recognition';
+            })
+            .catch(function (err) {
+                console.log('摄像头访问失败：', err);
+            });
+    }
+
+    /*视频画布可以拖动位置代码*/
+    // 设置 canvas 元素的初始位置
+    let canvas = document.getElementById('canvas');
+    canvas.style.position = 'absolute';
+    canvas.style.left = '0px';
+    canvas.style.top = '0px';
+
+    // 当鼠标按下时，开始拖动
+    canvas.addEventListener('mousedown', (event) => {
+        let startX = event.clientX;
+        let startY = event.clientY;
+        let initialX = parseInt(canvas.style.left);
+        let initialY = parseInt(canvas.style.top);
+
+        function move(event) {
+            let deltaX = event.clientX - startX;
+            let deltaY = event.clientY - startY;
+            canvas.style.left = initialX + deltaX + 'px';
+            canvas.style.top = initialY + deltaY + 'px';
+        }
+
+        function release() {
+            window.removeEventListener('mousemove', move);
+            window.removeEventListener('mouseup', release);
+        }
+
+        window.addEventListener('mousemove', move);
+        window.addEventListener('mouseup', release);
+    });
+</script>
+</body>
+</html>

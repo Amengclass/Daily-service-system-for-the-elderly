@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IP地址信息</title>
+    <!-- 返回按钮 -->
+    <a href="/" class="floating-button">返回</a>
+    <!-- 引入自定义 CSS 样式 -->
+    <link rel="stylesheet" href="../static/css/location.css">
+</head>
+<body>
+<div class="container">
+    <p>点击按钮获取您当前位置：</p>
+    <button id="getLocationButton">获取位置</button>
+    <p id="ip"></p>
+    <p id="location"></p>
+    <p id="time"></p>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#getLocationButton').click(function () {
+            console.log("点击了'自动查询'按钮"); // 添加这行代码
+            $.ajax({
+                url: "/location/info",
+                type: "GET",
+                success: function (data) {
+                    $('#ip').text('IP地址: ' + data.ip);
+                    $('#location').text('地理位置: ' + data.location);
+                },
+                error: function (xhr, status, error) {
+                    console.error('获取IP信息时出错:', error);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

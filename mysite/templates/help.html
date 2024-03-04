@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 设置页面标题 -->
+    <title>一键帮助</title>
+    <!-- 返回按钮 -->
+    <a href="/" class="floating-button">返回</a>
+
+    <!-- 引入 FontAwesome 图标库样式 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <!-- 引入自定义 CSS 样式 -->
+    <link rel="stylesheet" href="../static/css/help.css">
+
+</head>
+<body>
+<!-- 页面主体部分 -->
+<div class="container">
+    <!-- 页面标题 -->
+    <h1>一键帮助</h1>
+
+    <!-- 模块部分 -->
+    <div class="module">
+        <!-- 第一个模块链接 -->
+        <a href="help/fall_detection">
+            <svg xmlns="http://www.w3.org/2000/svg" height="48" width="50" viewBox="0 0 512 512">
+                <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                <path fill="#000000"
+                      d="M288 0c17.7 0 32 14.3 32 32l0 9.8c0 54.6-27.9 104.6-72.5 133.6l.2 .3L304.5 256l87.5 0c15.1 0 29.3 7.1 38.4 19.2l43.2 57.6c10.6 14.1 7.7 34.2-6.4 44.8s-34.2 7.7-44.8-6.4L384 320l-96 0h-1.4l92.3 142.6c9.6 14.8 5.4 34.6-9.5 44.3s-34.6 5.4-44.3-9.5L164.5 249.2c-2.9 9.2-4.5 19-4.5 29l0 73.8c0 17.7-14.3 32-32 32s-32-14.3-32-32V278.2c0-65.1 39.6-123.7 100.1-147.9C232.3 115.8 256 80.8 256 41.8l0-9.8c0-17.7 14.3-32 32-32zM112 32a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/>
+            </svg>
+            <span>摔倒识别</span></a>
+        <!-- 第二个模块链接 -->
+        <a href="/help/emergency_contact"><i class="fa-regular fa-address-book"></i><span>设置紧急联系人</span></a>
+        <!-- 第三个模块链接 -->
+        <a href="/help/call_for_help"><i class="fa-solid fa-phone"></i><span>电话求助</span></a>
+        <!-- 第四个模块链接 -->
+        <a href="/help/sms_for_help"><i class="fa-regular fa-envelope"></i><span>短信求助</span></a>
+    </div>
+</div>
+</body>
+</html>

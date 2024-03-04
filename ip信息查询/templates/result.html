@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP地址查询结果</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 20px;
+        }
+
+        .result-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+
+        .result-container p {
+            margin: 10px 0;
+        }
+
+        .result-container p:first-child {
+            margin-top: 0;
+        }
+
+        .result-container p:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>IP地址查询结果</h1>
+    <div class="result-container">
+        <p>IP地址: {{ location_info.ip }}</p>
+        <p>国家: {{ location_info.country_name }}</p>
+        <p>地区: {{ location_info.region }}</p>
+        <p>城市: {{ location_info.city }}</p>
+        <p>邮政编码: {{ location_info.postal }}</p>
+        <p>纬度: {{ location_info.latitude }}</p>
+        <p>经度: {{ location_info.longitude }}</p>
+    </div>
+</body>
+</html>

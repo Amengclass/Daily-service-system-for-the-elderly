@@ -1,0 +1,105 @@
+
+    /* 设置 body 样式 */
+body {
+    /* 设置居中 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* 设置样式 */
+    font-family: Arial, sans-serif;
+    /* 设置背景图片 */
+    background-image: url('https://picsum.photos/1920/1080');
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* 设置页面容器样式 */
+.container {
+    /* 设置容器的最大宽度为800px */
+    max-width: 800px;
+    /* 设置容器的内边距为20px */
+    padding: 20px;
+    /* 设置容器的背景颜色为白色，并设置不透明度为0.8 */
+    background-color: rgba(255, 255, 255, 0.35);
+    /* 设置容器的边框圆角为20px */
+    border-radius: 20px;
+    /* 设置容器的阴影效果，偏移量为0，模糊度为20px，颜色为黑色，透明度为0.5 */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    /* 设置容器的定位方式为绝对定位 */
+    position: absolute;
+    /* 将容器的顶部边缘移动到页面的中间位置 */
+    top: 50%;
+    /* 将容器的左侧边缘移动到页面的中间位置 */
+    left: 50%;
+    /* 使用 transform 来实现负外边距，将 .container 元素的顶部和左侧移到页面的中间位置 */
+    transform: translate(-50%, -50%);
+}
+
+
+/* 设置模块样式 */
+.module {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+
+/* 设置链接样式 */
+.module a {
+    /* 使用 Flexbox 布局 */
+    display: flex;
+    /* 设置主轴方向为列 */
+    flex-direction: column;
+    /* 主轴方向居中对齐 */
+    align-items: center;
+    /* 交叉轴方向居中对齐 */
+    justify-content: center; /* 将内容垂直居中 */
+    /* 移除链接下划线 */
+    text-decoration: none;
+    /* 设置文字颜色为黑色 */
+    color: #000;
+    /* 设置内边距为 20px */
+    padding: 20px;
+    /* 设置边框宽度为 3px、边框样式为实线、边框颜色为 #ccc */
+    border: 3px solid #ccc;
+    /* 将边框圆角化 */
+    border-radius: 50%; /* 将链接圆角化 */
+    /* 设置宽度为 150px */
+    width: 150px;
+    /* 设置高度为 150px */
+    height: 150px;
+    /* 设置底部外边距为 10px */
+    margin-bottom: 10px;
+    /* 设置背景颜色为 80% 不透明的白色 */
+    background-color: rgba(255, 255, 255, 0.5);
+    /* 添加阴影效果：水平偏移量为 0、垂直偏移量为 0、模糊半径为 10px、阴影颜色为 50% 不透明度的黑色 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+/* 设置图标悬停样式 */
+.module a i.fas:hover {
+    color: #0056b3; /* 设置鼠标悬停时图标的颜色 */
+    transform: scale(1.2); /* 设置鼠标悬停时图标的缩放效果 */
+}
+/* module a:hover 鼠标悬停时的样式样式 */
+.module a:hover {
+    border-color: #007bff;
+    background-color: rgba(242, 242, 242, 0.3); /* 设置背景颜色的透明度 */
+}
+
+/* 设置图标样式 */
+.module a i {
+    font-size: 48px;
+}
+
+/* 设置文本样式 */
+.module a span {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+h1 {
+    text-align: center;
+}

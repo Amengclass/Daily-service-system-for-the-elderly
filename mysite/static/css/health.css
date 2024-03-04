@@ -1,0 +1,94 @@
+body {
+    /* 设置背景图片 */
+    background-image: url('https://picsum.photos/1920/1080');
+
+}
+
+/* 设置页面容器样式 */
+.container {
+    /* 设置容器的最大宽度为800px */
+    max-width: 800px;
+    /* 设置容器的内边距为20px */
+    padding: 20px;
+    /* 设置容器的背景颜色为白色，并设置不透明度为0.8 */
+    background-color: rgba(255, 255, 255, 0.35);
+    /* 设置容器的边框圆角为20px */
+    border-radius: 20px;
+    /* 设置容器的阴影效果，偏移量为0，模糊度为20px，颜色为黑色，透明度为0.5 */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    /* 设置容器的定位方式为绝对定位 */
+    position: absolute;
+    /* 将容器的顶部边缘移动到页面的中间位置 */
+    top: 30%;
+    /* 将容器的左侧边缘移动到页面的中间位置 */
+    left: 50%;
+    /* 使用 transform 来实现负外边距，将 .container 元素的顶部和左侧移到页面的中间位置 */
+    transform: translate(-50%, -50%);
+}
+
+
+h1 {
+    text-align: center;
+}
+
+/* module样式 */
+.module {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/*选择 module下的所有 a样式 */
+.module a {
+    display: flex; /* 使用 Flexbox 布局 */
+    /* 设置主轴方向为垂直方向 */
+    flex-direction: column;
+
+    /* 在垂直方向上居中 */
+    align-items: center;
+
+    /* 在水平方向上居中 */
+    justify-content: center;
+
+    width: 120px;
+    height: 120px;
+    margin: 10px;
+    padding: 10px;
+    border: 3px solid #ccc;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease
+
+}
+
+/* module a:hover 鼠标悬停时的样式样式 */
+.module a:hover {
+    border-color: #007bff;
+    background-color: #dedcdc;
+}
+
+/* module a i样式 */
+.module a i {
+    font-size: 40px;
+    margin-right: 10px;
+}
+
+/* Font Awesome 图标样式 */
+.module a i.fas {
+    font-size: 36px; /* 设置图标的大小 */
+    color: #007bff; /* 设置图标的颜色 */
+    transition: color 0.2s ease; /* 设置颜色过渡效果 */
+    display: block; /* 将图标设置为块级元素 */
+}
+
+/* 设置图标悬停样式 */
+.module a i.fas:hover {
+    color: #0056b3; /* 设置鼠标悬停时图标的颜色 */
+    transform: scale(1.2); /* 设置鼠标悬停时图标的缩放效果 */
+}
+
+.module a span {
+    font-size: 17px;
+}

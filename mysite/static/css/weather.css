@@ -1,0 +1,110 @@
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+
+    /* 设置背景图片 */
+    background-image: url('https://picsum.photos/1920/1080');
+}
+
+/* Container styles */
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    /* 设置容器的背景颜色为白色，并设置不透明度为0.8 */
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Heading styles */
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #007bff; /* Blue color */
+    text-align: center; /* 居中对齐 */
+}
+
+/* Weather section styles */
+.weather {
+    display: flex; /* 使用flex布局 */
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Select styles */
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9; /* Light gray background */
+    font-size: 16px;
+    color: #333; /* Dark gray color */
+}
+
+.weather-info {
+    font-size: 20px; /* 设置文字大小 */
+    display: flex; /* 启用 Flex 布局 */
+    flex-direction: column; /* 设置子元素垂直排列 */
+    justify-content: center; /* 设置子元素垂直居中 */
+    align-items: center; /* 设置子元素水平居中 */
+}
+
+/*单独设置id为province的组件样式*/
+#province {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9; /* 浅灰色背景 */
+    font-size: 16px;
+    color: #333; /* 深灰色 */
+    margin-left: 30px; /* 左侧 20px 的间距 */
+}
+
+
+select:focus {
+    outline: none;
+    border-color: #007bff; /* Blue color */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.6); /* Light blue shadow */
+}
+
+/* Button styles */
+button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Blue color */
+    color: white; /* White color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Cursor pointer */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+    font-size: 16px; /* Font size */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Button shadow */
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker blue color */
+}
+
+button:active {
+    background-color: #004999; /* Darker blue color */
+    box-shadow: none; /* No shadow */
+}
+
+/*!* Result section styles *!*/
+/*.result {*/
+/*    display: none;*/
+/*    margin-top: 20px;*/
+/*    padding: 20px;*/
+/*    border-radius: 8px;*/
+/*    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);*/
+/*    background-color: #f0f0f0; !* Light gray background *!*/
+/*}*/
+
+/*.result.show {*/
+/*    display: block;*/
+/*}*/
+
+/*!* Result paragraph styles *!*/
+/*.result p {*/
+/*    margin: 10px 0;*/
+/*}*/
