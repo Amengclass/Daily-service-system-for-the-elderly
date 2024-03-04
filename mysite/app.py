@@ -40,7 +40,7 @@ def recognition():
     return render_template('help/recognition.html')
 
 
-def gen_frames():
+def gen_frames(mp=None):
     mpPose = mp.solutions.pose
     pose = mpPose.Pose()
     mpDraw = mp.solutions.drawing_utils
