@@ -1,0 +1,177 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+    /* 设置背景图片 */
+    background-image: url('https://picsum.photos/1920/1080');
+}
+
+#memo-container {
+    width: 500px;
+    background-color: rgba(255, 255, 255, 0.5); /* 提高不透明度以减轻背景图片的影响 */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* 提高阴影效果 */
+    overflow: auto; /* 当内容溢出时显示滚动条 */
+    max-height: 80vh; /* 使用视口高度的百分比 */
+    animation: fadeInUp 0.5s ease forwards;
+    transition: background-color 0.3s ease; /* 添加过渡效果 */
+}
+
+#memo-container:hover {
+    background-color: rgba(255, 255, 255, 0.95); /* 悬停时提高背景不透明度 */
+}
+
+#memo-container::-webkit-scrollbar {
+    width: 10px; /* 设置滚动条宽度 */
+}
+
+#memo-container::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2); /* 设置滚动条thumb颜色 */
+    border-radius: 5px; /* 设置滚动条thumb圆角 */
+}
+
+#memo-container::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.09); /* 设置滚动条轨道颜色 */
+    border-radius: 5px; /* 设置滚动条轨道圆角 */
+}
+
+/* 其他样式保持不变 */
+
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#memo-container h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px; /* 添加下边距 */
+}
+
+#memo-container input[type="text"] {
+    width: calc(100% - 85px); /* 调整文本框的宽度 */
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #fd0909;
+    border-radius: 5px;
+    outline: none;
+    margin-bottom: 10px; /* 添加下边距 */
+    /*background-color: #f3eaea; !* 设置背景颜色 *!*/
+    box-shadow: 0 2px 4px rgba(199, 183, 183, 0.98); /* 添加阴影效果 */
+}
+
+#memo-container button {
+    width: 80px; /* 设置按钮的宽度 */
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#memo-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+#memo-list li {
+    background-color: #f9f9f9;
+    padding: 10px; /* 调整备忘录条目的内边距 */
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    width: auto; /* 设置备忘录条目的宽度 */
+    height: auto; /* 设置备忘录条目的高度 */
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#memo-list li span {
+    flex-grow: 1; /* 让备忘录文本填充剩余空间 */
+    margin-right: 10px; /* 设置备忘录文本与其他元素的间距 */
+    word-wrap: break-word; /* 在必要时换行 */
+    overflow-wrap: break-word; /* 在必要时换行 */
+}
+
+#memo-list li button {
+    background-color: #c45fbf;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.memo-item:hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(198, 140, 245, 0.88);
+}
+
+
+/* 定义备忘录文本的样式 */
+.memo-item span {
+    flex-grow: 1; /* 填充剩余空间，让文本占据剩余宽度 */
+}
+
+/* 定义备忘录复选框的样式 */
+.memo-item input[type="checkbox"] {
+    margin-right: 10px; /* 给复选框留出右边距 */
+    width: 20px; /* 设置复选框的宽度 */
+    height: 20px; /* 设置复选框的高度 */
+    appearance: none; /* 清除默认样式 */
+    border: 2px solid #ccc; /* 设置边框样式 */
+    border-radius: 5px; /* 设置边框圆角 */
+    outline: none; /* 清除聚焦时的外边框 */
+    cursor: pointer; /* 设置鼠标样式为手型 */
+}
+
+/* 定义备忘录复选框的选中状态样式 */
+.memo-item input[type="checkbox"]:checked {
+    background-color: #007bff; /* 设置背景颜色为蓝色 */
+    border-color: #007bff; /* 设置边框颜色为蓝色 */
+}
+
+/* 定义备忘录复选框的选中状态下的打勾样式 */
+.memo-item input[type="checkbox"]:checked::before {
+    content: '\2713'; /* 设置内容为打勾的 Unicode 字符 */
+    display: block; /* 将内容设置为块级元素 */
+    color: #fff; /* 设置颜色为白色 */
+    font-size: 16px; /* 设置字体大小 */
+    text-align: center; /* 文本居中对齐 */
+    line-height: 20px; /* 设置行高与复选框的高度一致 */
+}
+
+/* 定义备忘录文本的删除线效果 */
+.memo-item.checked span {
+    text-decoration: line-through;
+}
+
+

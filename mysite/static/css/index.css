@@ -103,3 +103,15 @@ body {
 h1 {
     text-align: center;
 }
+
+/* 媒体查询 */
+@media (max-width: 600px) {
+    /* 设置链接样式 */
+    .module a {
+        width: auto;
+        /* 设置高度为 auto */
+        height: auto;
+        /* 设置弹性盒的扩展因子为 1 */
+        flex-grow: 1;
+    }
+}

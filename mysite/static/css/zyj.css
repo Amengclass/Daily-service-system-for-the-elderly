@@ -1,0 +1,141 @@
+body {
+    font-family: Arial, sans-serif; /* 设置全局字体 */
+    margin: 0; /* 移除页面边距 */
+    padding: 0; /* 移除页面内边距 */
+    background-color: #f1f1f1; /* 设置背景颜色 */
+    display: flex; /* 设置页面布局为弹性盒子 */
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    height: 100vh; /* 设置高度为视口高度 */
+    background-image: url('https://picsum.photos/1920/1080'); /* 设置背景图 */
+}
+
+.container {
+    height: 80%; /* 容器高度 */
+    width: 80%; /* 容器宽度 */
+    background-color: rgba(255, 255, 255, 0.5); /* 容器背景颜色 */
+    padding: 20px; /* 容器内边距 */
+    border-radius: 10px; /* 边框圆角 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 阴影 */
+    text-align: center; /* 文字居中 */
+    animation: pulse 5s infinite; /* 设置动画 */
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.profile-picture {
+    width: 200px; /* 图片宽度 */
+    height: 200px; /* 图片高度 */
+    border-radius: 50%; /* 图片圆角 */
+    margin-bottom: 20px; /* 底边距 */
+    transition: transform 0.3s ease-in-out; /* 设置动画过渡效果 */
+    /*animation: bounceIn 2s infinite;*/
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.name {
+    font-size: 48px; /* 字体大小 */
+    font-weight: bold; /* 字体加粗 */
+    color: #333; /* 字体颜色 */
+    margin-bottom: 10px; /* 底边距 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 文字阴影 */
+    animation: slideInLeft 2s forwards; /* 设置动画 */
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100px); /* X轴移动 */
+        opacity: 0; /* 不透明度 */
+    }
+    to {
+        transform: translateX(0); /* X轴移动 */
+        opacity: 1; /* 不透明度 */
+    }
+}
+
+.bio {
+    color: #555; /* 字体颜色 */
+    margin-bottom: 20px; /* 底边距 */
+    font-size: 24px; /* 字体大小 */
+    animation: slideInRight 2s forwards; /* 设置动画 */
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100px); /* X轴移动 */
+        opacity: 0; /* 不透明度 */
+    }
+    to {
+        transform: translateX(0); /* X轴移动 */
+        opacity: 1; /* 不透明度 */
+    }
+}
+
+.social-icons {
+    display: flex; /* 设置为弹性盒子 */
+    justify-content: center; /* 水平居中 */
+    margin-top: 20px; /* 上边距 */
+    animation: slideInUp 2s forwards; /* 设置动画 */
+}
+
+.social-icon {
+    margin: 0 10px; /* 外边距 */
+    font-size: 32px; /* 字体大小 */
+    color: #666; /* 字体颜色 */
+    transition: color 2s ease-in-out; /* 设置过渡效果 */
+}
+
+/* 为下拉选择框增加样式 */
+select {
+    width: auto;
+    height: auto;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+
+    display: inline-block; /* 添加这一行，使其水平对齐 */
+    vertical-align: middle; /* 添加这一行，使其垂直对齐 */
+}
+
+/* 增加选项的样式 */
+option {
+    background-color: #fff;
+    color: #333;
+    padding: 5px 10px;
+}
+
+/* 为音频播放器增加样式 */
+#audio {
+    width: 30%;
+    margin-top: 10px;
+
+    display: inline-block; /* 添加这一行，使其水平对齐 */
+    vertical-align: middle; /* 添加这一行，使其垂直对齐 */
+}
+.social-icons .social-icon a {
+    text-decoration: none;
+}

@@ -25,9 +25,19 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/zyj')  # 设置主页目录
+def ztj():
+    return render_template('zyj.html')
+
+
 @app.route('/help')  # 设置一键帮助
 def help():
     return render_template('help.html')
+
+
+@app.route('/404')  # 设置一键帮助
+def fail():
+    return render_template('404.html')
 
 
 @app.route('/help/fall_detection')  # /一键帮助/摔倒检测
@@ -40,67 +50,51 @@ def recognition():
     return render_template('help/recognition.html')
 
 
-def gen_frames(mp=None):
-    mpPose = mp.solutions.pose
-    pose = mpPose.Pose()
-    mpDraw = mp.solutions.drawing_utils
-
-    cap = cv2.VideoCapture(0)
-    pTime = 0
-
-    while True:
-        success, img = cap.read()
-        imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        results = pose.process(imgRGB)
-
-        if results.pose_landmarks:
-            mpDraw.draw_landmarks(img, results.pose_landmarks, mpPose.POSE_CONNECTIONS)
-
-            for id, lm in enumerate(results.pose_landmarks.landmark):
-                h, w, c = img.shape
-                cx, cy = int(lm.x * w), int(lm.y * h)
-                cv2.circle(img, (cx, cy), 5, (255, 0, 0), cv2.FILLED)
-
-        cTime = time.time()
-        fps = 1 / (cTime - pTime)
-        pTime = cTime
-        cv2.putText(img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
-        ret, buffer = cv2.imencode('.jpg', img)
-        frame = buffer.tobytes()
-        yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-
-
-@app.route('/help/emergency_contact')  # 一键帮助/摔倒检测/识别
+# 一键帮助/摔倒检测/识别
+@app.route('/help/emergency_contact')
 def emergency():
     return render_template('help/emergency_contact.html')
 
 
-@app.route('/video_feed')
-def video_feed():
-    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+# 姿势识别
+# @app.route('/video_feed')
+# def video_feed():
+#     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-@app.route('/help/fall_detection/detect_fall', methods=['POST'])
-# def detect_fall():
-#     # 使用 OpenCV 进行摔倒检测
-#     # 这里只是一个示例，您需要使用适合您的摔倒检测算法
-#     # 需要注意的是，OpenCV 4.3.0 以上的版本支持 Tensroflow 2.x
-#     # 请确保您的环境中安装了支持 TensorFlow 的 OpenCV
+# def gen_frames():
+#     mpPose = mp.solutions.pose
+#     pose = mpPose.Pose()
+#     mpDraw = mp.solutions.drawing_utils
 #
+#     cap = cv2.VideoCapture(0)
+#     pTime = 0
 #
-#     # 获取 POST 请求中的视频帧数据
-#     data = request.files['frame'].read()
-#     nparr = np.frombuffer(data, np.uint8)
-#     frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+#     while True:
+#         success, img = cap.read()
+#         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+#         results = pose.process(imgRGB)
 #
-#     # 在这里执行您的摔倒检测算法
-#     # 如果检测到摔倒，返回 True；否则返回 False
-#     detected = False
+#         if results.pose_landmarks:
+#             mpDraw.draw_landmarks(img, results.pose_landmarks, mpPose.POSE_CONNECTIONS)
 #
-#     # 返回结果
-#     return {'detected': detected}
+#             for id, lm in enumerate(results.pose_landmarks.landmark):
+#                 h, w, c = img.shape
+#                 cx, cy = int(lm.x * w), int(lm.y * h)
+#                 cv2.circle(img, (cx, cy), 5, (255, 0, 0), cv2.FILLED)
+#
+#         cTime = time.time()
+#         fps = 1 / (cTime - pTime)
+#         pTime = cTime
+#         cv2.putText(img, str(int(fps)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
+#         ret, buffer = cv2.imencode('.jpg', img)
+#         frame = buffer.tobytes()
+#         yield (b'--frame\r\n'b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+#
 
-@app.route('/location')  # 设置位置服务界面
+
+# 设置位置服务界面
+@app.route('/location')
 def location():
     return render_template('location.html')
 
@@ -109,19 +103,21 @@ def location():
 @app.route('/location/info', methods=['GET'])
 def location_info():
     print("进来了")
-    # 使用您的 API 密钥进行 API 请求
-    response = requests.get(f'https://whois.pconline.com.cn/ipJson.jsp?json=true')
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
+    }
+    url = 'https://whois.pconline.com.cn/ipJson.jsp?json=true'
+    try:
+        response = requests.get(url, headers=headers)
+        data = response.json()
+        if data:
+            return jsonify({'ip': data['ip'], 'city': data['city'], 'location': data['addr']})
+    except Exception as e:
+        print("Error:", e)
+    return jsonify({'error': 'Failed to fetch location information.'})
 
-    # 将 API
-    data = response.json()
 
-    # 这里高频点击会报错，因为api不支持
-    # 检查数据中是否包含ip和desc字段
-    if data:
-        # 将获取的 IP 地址和地理位置数据返回给前端
-        return jsonify({'ip': data['ip'], 'city': data['city'], 'location': data['addr']})
-
-
+# 天气查询
 @app.route('/tools/weather/get_weather', methods=['POST'])
 def get_weather():
     print("进来了")
@@ -156,6 +152,11 @@ def tools():
 @app.route('/tools/weather')  # 设置智能工具界面
 def weather():
     return render_template('tools/weather.html')
+
+
+@app.route('/tools/Memo')  # 设置智能工具界面
+def Memo():
+    return render_template('tools/Memorandum.html')
 
 
 if __name__ == '__main__':

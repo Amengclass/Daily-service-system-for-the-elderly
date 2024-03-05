@@ -19,7 +19,7 @@ body {
     /* 设置容器的定位方式为绝对定位 */
     position: absolute;
     /* 将容器的顶部边缘移动到页面的中间位置 */
-    top: 30%;
+    top: 45%;
     /* 将容器的左侧边缘移动到页面的中间位置 */
     left: 50%;
     /* 使用 transform 来实现负外边距，将 .container 元素的顶部和左侧移到页面的中间位置 */
@@ -92,4 +92,22 @@ h1 {
 
 .module a span {
     font-size: 17px;
+}
+
+/* 媒体查询 */
+@media (max-width: 600px) {
+    /* 设置页面容器样式 */
+.container {
+       width: 80%;
+       height: auto;
+    }
+   /* 设置链接样式 */
+.module a {
+    width: 30%;
+    /* 设置高度为 auto */
+    height: auto;
+    /* 设置弹性盒的扩展因子为 1 */
+    flex-grow: 1;
+}
+
 }

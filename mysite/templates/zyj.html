@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 标题 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>张老八的个人主页</title>
+    <!-- 样式 -->
+    <!-- 引入自定义 CSS 样式 -->
+    <link rel="stylesheet" href="../static/css/zyj.css">
+</head>
+<body>
+<div class="container">
+    <!-- 头像 -->
+    <img src="{{ url_for('static', filename='pictures/zyj.jpg') }}" alt="Profile Picture" class="profile-picture">
+    <!-- 名字 -->
+    <div class="name">张老八</div>
+    <!-- 介绍 -->
+    <div class="bio">喜欢唱、跳、打篮球的全能歌手</div>
+    <!-- 社交媒体图标 -->
+    <div class="social-icons">
+        <span class="social-icon"><a href="/404">QQ</a></span>
+        <span class="social-icon"><a href="/404">微信</a></span>
+        <span class="social-icon"><a href="/404">GitHub</a></span>
+    </div>
+    <!-- 音频 -->
+    <audio id="audio" controls>
+        <source id="audioSource" type="audio/mpeg">
+    </audio>
+
+    <!-- 歌曲下拉列表 -->
+    <select id="song-list" onchange="changeSong(this.value)">
+        <!-- 歌曲选项将由 JavaScript 动态生成 -->
+    </select>
+</div>
+
+<script>
+    // 在HTML模板中定义全局JavaScript变量，保存服务器端生成的URL
+    var audioUrl = "{{ url_for('static', filename='audio/') }}";
+    // 定义歌曲列表
+    var songList = [
+        '--请选择歌曲--',
+        '如果这就是爱情(0:40)',
+        '爱的回归线(3:00)',
+        '带我走(1:28)',
+        '爱要怎么说出口_语音版(简短语音版37s)',
+        '爱要怎么说出口(3:02)',
+        '圣诞星(1:00)',
+        '唯一(3:04)',
+    ];
+
+    // 使用 JavaScript 循环生成选项
+    songList.forEach(function (song, index) {
+        var optionElement = document.createElement("option");
+        optionElement.value = index;
+        optionElement.textContent = song;
+        document.getElementById("song-list").appendChild(optionElement);
+    });
+
+    // 歌曲选择变化时的处理函数
+    function changeSong(selectedIndex) {
+        // 在这里可以执行相应的操作，例如播放选中的歌曲等
+        var audio = document.getElementById('audio')
+        var audioSource = document.getElementById('audioSource');
+
+        if (selectedIndex != 0) {
+            console.log("用户选择了歌曲：" + songList[selectedIndex]);
+            // 获取去除括号及其内容后的歌曲名
+            var cleanSongName = songList[selectedIndex].replace(/\s*\([^)]*\)/g, '');
+            // 使用修改后的歌曲名拼接成完整的路径
+            audioSource.src = audioUrl + cleanSongName + '.mp3';
+            console.log(audioSource.src);
+
+        } else {
+            // 重置音频并停止播放
+            audio.currentTime = 0;
+            audio.pause();
+            audioSource.src = '';
+        }
+        audio.load();
+        audio.play();
+    }
+</script>
+
+</body>
+</html>
