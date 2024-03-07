@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>睡眠质量监测</title>
+    <!-- 引入自定义 CSS 样式 -->
+    <link rel="stylesheet" href="../../static/css/sleep.css">
+</head>
+<body>
+<div class="sleep-quality-container">
+    <h1>睡眠质量监测</h1>
+    <p>监测您的睡眠，促进更好的健康</p>
+    <div class="sleep-quality-indicator">良好的睡眠</div>
+    <div class="sleep-quality-chart">
+        <div class="clock-container">
+            <div class="clock">
+                <div class="hour" id="hour"></div>
+                <div class="minute" id="minute"></div>
+                <div class="second" id="second"></div>
+            </div>
+            <div class="clock-mark hour-mark"></div>
+        </div>
+    </div>
+
+    <div class="timer-container">
+        <div class="timer-display" id="timerDisplay">00:00:00</div>
+        <div class="timer-controls">
+            <button class="timer-button" id="startButton" onclick="startTimer()" disabled>开始</button>
+            <button class="timer-button" onclick="pauseTimer()">暂停</button>
+            <button class="timer-button" onclick="resetTimer()">重置</button>
+        </div>
+    </div>
+
+    <div class="set-sleep-time">
+        <label class="set-sleep-time-label" for="timeInputs">设置倒计时：</label>
+        <div class="set-sleep-time-input" id="timeInputs">
+            <input type="number" id="hoursInput" placeholder="时">
+            <input type="number" id="minutesInput" placeholder="分">
+            <input type="number" id="secondsInput" placeholder="秒">
+        </div>
+
+        <input class="set-sleep-time-range" type="range" id="timeRange" min="1" max="3600" step="1" value="0"
+               oninput="updateTimeInputs()">
+
+        <button class="set-sleep-time-button" onclick="setCountdown()">设置倒计时</button>
+    </div>
+</div>
+
+<script>
+    let timerInterval;
+    let timerSeconds = 0;
+
+    function updateTimerDisplay() {
+        const hours = Math.floor(timerSeconds / 3600);
+        const minutes = Math.floor((timerSeconds % 3600) / 60);
+        const seconds = timerSeconds % 60;
+
+        const displayText = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        document.getElementById('timerDisplay').innerText = displayText;
+    }
+
+    function startTimer() {
+        const startButton = document.getElementById('startButton');
+        startButton.disabled = true;
+
+        timerInterval = setInterval(() => {
+            if (timerSeconds > 0) {
+                timerSeconds--;
+                updateTimerDisplay();
+            }
+
+            if (timerSeconds <= 0) {
+                clearInterval(timerInterval);
+                alert("计时完成！");
+                startButton.disabled = false;
+            }
+        }, 1000);
+    }
+
+    function pauseTimer() {
+        clearInterval(timerInterval);
+        const startButton = document.getElementById('startButton');
+        startButton.disabled = false;
+    }
+
+    function resetTimer() {
+        clearInterval(timerInterval);
+        timerSeconds = 0;
+        updateTimerDisplay();
+        const startButton = document.getElementById('startButton');
+        startButton.disabled = false;
+    }
+
+    function setCountdown() {
+        const hoursInput = document.getElementById('hoursInput');
+        const minutesInput = document.getElementById('minutesInput');
+        const secondsInput = document.getElementById('secondsInput');
+
+        const hours = parseInt(hoursInput.value) || 0;
+        const minutes = parseInt(minutesInput.value) || 0;
+        const seconds = parseInt(secondsInput.value) || 0;
+
+        // 检查输入是否合法
+        if (hours < 0 || minutes < 0 || seconds < 0 || hours > 8 || minutes >= 60 || seconds >= 60) {
+            alert("请输入有效的时、分、秒");
+            return;
+        }
+
+        const inputSeconds = hours * 3600 + minutes * 60 + seconds;
+
+        timerSeconds = inputSeconds;
+        updateTimerDisplay();
+
+        const startButton = document.getElementById('startButton');
+        startButton.disabled = false;
+    }
+
+    function updateTimeInputs() {
+        const timeRange = document.getElementById('timeRange');
+        const hoursInput = document.getElementById('hoursInput');
+        const minutesInput = document.getElementById('minutesInput');
+        const secondsInput = document.getElementById('secondsInput');
+
+        const selectedSeconds = parseInt(timeRange.value);
+
+        const hours = Math.floor(selectedSeconds / 3600);
+        const minutes = Math.floor((selectedSeconds % 3600) / 60);
+        const seconds = selectedSeconds % 60;
+
+        hoursInput.value = hours;
+        minutesInput.value = minutes;
+        secondsInput.value = seconds;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const startButton = document.getElementById('startButton');
+        startButton.disabled = timerSeconds <= 0;
+    });
+
+    function updateClock() {
+        const hourElement = document.getElementById('hour');
+        const minuteElement = document.getElementById('minute');
+        const secondElement = document.getElementById('second');
+
+        const now = new Date();
+        const hours = now.getHours() % 12; // 12-hour format
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+
+        const hourDegree = (360 / 12) * hours + (360 / 12) * (minutes / 60);
+        const minuteDegree = (360 / 60) * minutes + (360 / 60) * (seconds / 60);
+        const secondDegree = (360 / 60) * seconds;
+
+        hourElement.style.transform = `rotate(${hourDegree}deg)`;
+        minuteElement.style.transform = `rotate(${minuteDegree}deg)`;
+        secondElement.style.transform = `rotate(${secondDegree}deg)`;
+    }
+
+    // Update the clock every second
+    setInterval(updateClock, 1000);
+
+    // Initial call to set the initial state of the clock
+    updateClock();
+</script>
+</body>
+</html>

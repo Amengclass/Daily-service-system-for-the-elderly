@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw; /* 设置 body 宽度为视口宽度 */
+    height: 100vh; /* 设置 body 高度为视口高度 */
+    background-image: url('https://picsum.photos/1920/1080');
+    background-size: cover; /* 调整背景图片大小以适应 body 尺寸 */
+    background-position: center; /* 将背景图片位置居中 */
+    overflow: hidden; /* 隐藏任何超出 body 元素的内容 */
+}
+
+.btn {
+    display: inline-block;
+    padding: 20px 15px;
+    background-color: rgba(65, 169, 201, 0.7); /* 设置按钮背景颜色和透明度 */
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+    border: 2px solid #f37204; /* 设置按钮外框颜色 */
+    font-size: 25px; /* 设置按钮文字大小 */
+}
+
+.btn:hover {
+    background-color: #e10f2d;
+    transform: scale(1.1); /* 设置鼠标悬停时按钮的缩放效果 */
+}
+
+/* 在小屏幕上修改样式 */
+@media (max-width: 600px) {
+}

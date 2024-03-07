@@ -1,0 +1,287 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f6f5f7;
+    /* 设置背景图片 */
+    background-image: url('https://picsum.photos/1920/1080');
+}
+
+h2 {
+    margin-bottom: 10px;
+    font-size: 32px;
+    text-transform: capitalize;
+}
+
+.container {
+    position: relative;
+    width: 768px;
+    height: 480px;
+    /* 设置容器的背景颜色为白色，并设置不透明度为0.3 */
+    background-color: rgba(239, 234, 234, 0.2);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/*白色登录面板*/
+.form-container {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background-color: white;
+    transition: all 0.6s ease-in-out;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 0 50px;
+}
+
+/*左边输入框*/
+.form-container.sign-in-container input {
+    border-radius: 10px; /* 设置边框的圆角半径 */ /* 其他输入框样式属性 */
+}
+
+/*右边输入框*/
+.form input {
+    border-radius: 10px; /* 设置边框的圆角半径 */
+}
+
+input {
+    width: 100%;
+    margin: 8px 0;
+    padding: 12px;
+    background-color: #eee;
+    border: none;
+}
+
+
+.forget-password {
+    display: inline-block;
+    height: 20px;
+    text-decoration: none;
+    color: #bbb;
+    text-transform: capitalize;
+    font-size: 12px;
+}
+
+.forget-password:hover {
+    color: lightslategray;
+    border-bottom: 2px solid #ff4b2b;
+}
+
+button {
+    background: #ff4b2b;
+    padding: 10px 50px;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    text-transform: uppercase;
+    color: white;
+    margin-top: 10px;
+    outline: none;
+    transition: transform 80;
+    cursor: pointer; /* 设置鼠标悬停时的样式为手型 */
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.overlay_container {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    z-index: 100;
+    right: 0;
+    overflow: hidden;
+    transition: all 0.6s ease-in-out;
+}
+
+/*红色面板*/
+.overlay {
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    left: -100%;
+    /*背景图片*/
+    background-image: url('https://source.unsplash.com/1920x1080'); /* 替换为您选择的图片链接 */
+    background-size: cover; /* 将背景图片大小调整为尽可能填充整个容器，同时保持纵横比 */
+    background-repeat: no-repeat; /* 禁止背景图片重复平铺 */
+    background-color: rgba(222, 21, 39, 0.7); /* 使用rgba来设置背景颜色透明度 */
+    transition: all 0.6s ease-in-out;
+}
+
+
+.overlay_panel {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    color: white;
+    padding: 0 40px;
+    text-align: center;
+}
+
+.overlay_panel button {
+    background-color: transparent;
+    border: 1px solid white;
+    cursor: pointer; /* 设置鼠标悬停时的样式为手型 */
+}
+
+.overlay_panel p {
+    font-size: 12px;
+    margin: 10px 0 15px 0;
+}
+
+.overlay_right_container {
+    right: 0;
+}
+
+.container.active .sign-up-container {
+    transform: translateX(100%);
+    z-index: 5;
+}
+
+.container.active .sign-in-container {
+    transform: translateX(100%);
+}
+
+.container.active .overlay_container {
+    transform: translateX(-100%);
+}
+
+.container.active .overlay {
+    transform: translateX(50%);
+}
+
+/* 游客登录按钮样式 */
+#guest-login {
+    background-color: #4CAF50; /* 设置背景颜色 */
+    color: white; /* 设置文字颜色 */
+    padding: 10px 20px; /* 设置内边距 */
+    border: none; /* 移除边框 */
+    cursor: pointer; /* 设置鼠标悬停时的样式为手型 */
+    border-radius: 10px; /* 设置圆角 */
+    margin-top: 10px; /* 设置顶部边距 */
+}
+
+/* 当鼠标悬停在按钮上时的样式 */
+#guest-login:hover {
+    background-color: #af114c; /* 更改背景颜色 */
+}
+
+/* 当按钮被点击时的样式 */
+#guest-login:active {
+    background-color: #3670b3; /* 更改背景颜色 */
+}
+
+/*忘记密码链接样式*/
+.forget-password {
+    color: rgba(225, 5, 11, 0.95); /* 将链接的颜色设置为蓝色 */
+    text-decoration: none; /* 去掉链接的下划线 */
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%; /* 调整容器的宽度 */
+        height: 50%; /* 设置高度为自动，以容纳内容 */
+        max-height: 80%; /* 设置最大高度为页面高度的80%，以避免过度拉伸 */
+        overflow: auto; /* 添加滚动条以便内容溢出时进行滚动 */
+    }
+
+    /*.form-container.sign-in-container .form {*/
+    /*    font-size: 16px; !* 调整表单中元素的大小 *!*/
+    /*    !* 其他表单元素样式属性 *!*/
+    /*}*/
+    /*左框标题*/
+    .form-container.sign-in-container h2 {
+        font-size: 33px; /* 调整标题的大小 */
+        /* 其他标题样式属性 */
+    }
+
+    .form-container.sign-in-container input {
+        font-size: 13px; /* 调整输入框的字体大小 */
+        width: 120px; /* 调整输入框的宽度 */
+        height: auto; /* 调整输入框的高度 */
+        border-radius: 10px; /* 设置边框的圆角半径 */ /* 其他输入框样式属性 */
+        border-radius: 10px; /* 设置边框的圆角半径 */ /* 其他输入框样式属性 */
+    }
+
+    .form-container.sign-in-container .forget-password {
+        display: inline-block; /* 设置为横向显示 */
+        font-size: 12px; /* 调整忘记密码链接的大小 */
+        /* 其他忘记密码链接样式属性 */
+    }
+
+    .form-container.sign-in-container button {
+        margin-top: 17px; /* 设置按钮的上边距 */
+        font-size: 14px; /* 调整按钮的字体大小 */
+        width: 130px; /* 设置按钮宽度 */
+        height: auto; /* 设置按钮高度 */
+        text-align: center; /* 水平居中排列按钮内的文字 */
+        /* 其他按钮样式属性 */
+    }
+
+
+    /*游客登录按钮*/
+    #guest-login {
+        width: 95px; /* 设置按钮宽度 */
+        height: auto; /* 设置按钮高度自适应内容 */
+        font-size: 13px; /* 设置按钮文字大小 */
+        /* 其他按钮样式属性 */
+    }
+
+
+    /*sign in文字*/
+    .overlay_panel button {
+        font-size: 15px; /* 添加按钮文字的大小 */
+        width: auto; /* 设置按钮宽度 */
+        height: auto; /* 设置按钮高度自适应内容 */
+        /* 其他按钮样式属性 */
+    }
+
+    .overlay_panel p {
+        font-size: 16px; /* 添加按钮下方文字的大小 */
+        /* 其他按钮下方文字样式属性 */
+    }
+
+    /*右框标题*/
+    .form h2 {
+        /* 标题样式 */
+        font-size: 32px; /* 更改标题字体大小 */
+    }
+
+    .form input {
+        font-size: 13px; /* 调整输入框的字体大小 */
+        width: 120px; /* 调整输入框的宽度 */
+        height: auto; /* 调整输入框的高度 */
+        border-radius: 10px; /* 设置边框的圆角半径 */
+    }
+
+    .form button.signUp {
+        font-size: 14px; /* 调整按钮的字体大小 */
+        width: 130px; /* 设置按钮宽度 */
+        height: auto; /* 设置按钮高度 */
+        text-align: center; /* 水平居中排列按钮内的文字 */
+        /* 其他按钮样式属性 */
+    }
+
+}

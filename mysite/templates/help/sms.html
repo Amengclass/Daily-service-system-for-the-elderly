@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>短信求助页面</title>
+    <link rel="stylesheet" href="../../static/css/sms.css">
+</head>
+<body>
+<div class="container">
+    <h1>发送求助短信</h1>
+    <form action="">
+        <input type="text" id="name" name="name" placeholder="您的姓名">
+        <input type="text" id="phone" name="phone" placeholder="您的电话号码">
+        <textarea id="message" name="message" placeholder="请输入求助信息"></textarea>
+
+        <!-- 显示所有紧急联系人并提供手动勾选或一键全部勾选 -->
+        <div id="emergency_contacts">
+            <button type="button" onclick="toggleCheck()">一键全部勾选/取消</button>
+            <button id="sendButton" type="button" onclick="sendSMS()">发送</button>
+            {% for contact in emergency_contacts %}
+                <label class="checkbox-container">
+                    <input type="checkbox" name="emergency_contact" value="{{ contact.phone }}"> {{ contact.name }}
+                    : {{ contact.phone }}
+                    <span class="checkmark"></span>
+                </label>
+            {% endfor %}
+
+        </div>
+
+
+    </form>
+</div>
+
+<script>
+    function sendSMS() {
+        var name = document.getElementById('name').value;
+        var phone = document.getElementById('phone').value;
+        var message = document.getElementById('message').value;
+
+        // 构建短信内容
+        var smsContent = '我是' + name + '\n电话号码: ' + phone + '\n求助信息: ' + message;
+
+        // 编码短信内容为 URI
+        var encodedSMSContent = encodeURIComponent(smsContent);
+
+        var phoneNumbers = document.getElementsByName('emergency_contact');
+        var selectedContacts = [];
+
+        // 获取用户勾选的紧急联系人
+        for (var i = 0; i < phoneNumbers.length; i++) {
+            if (phoneNumbers[i].checked) {
+                selectedContacts.push(phoneNumbers[i].value);
+            }
+        }
+
+        // 构建短信链接
+        var smsLink = 'sms:';
+        selectedContacts.forEach(function (number, index) {
+            smsLink += number;
+            if (index !== selectedContacts.length - 1) {
+                smsLink += ",";
+            }
+        });
+        smsLink += '?body=' + encodedSMSContent;
+
+        // 打开短信应用
+        window.location.href = smsLink;
+    }
+
+    // 一键全部勾选/取消
+    function toggleCheck() {
+        var checkboxes = document.getElementsByName('emergency_contact');
+        var allChecked = true;
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (!checkboxes[i].checked) {
+                allChecked = false;
+                break;
+            }
+        }
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = !allChecked;
+        }
+    }
+</script>
+
+</body>
+</html>
