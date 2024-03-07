@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <style>
+        /* 设置全局样式 */
+        body {
+            font-family: Arial, sans-serif; /* 设置字体 */
+            margin: 0; /* 去除页面默认的外边距 */
+            padding: 0; /* 去除页面默认的内边距 */
+            background-color: #fdeff2; /* 设置页面背景颜色为粉色 */
+            background-image: url('https://picsum.photos/1920/1080'); /* 设置背景图片 */
+            background-size: cover; /* 将背景图片铺满整个页面 */
+            background-position: center; /* 设置背景图片居中显示 */
+            position: relative; /* 设置相对定位，以便后续绝对定位元素相对于它定位 */
+        }
+
+        /* 添加背景遮罩 */
+        .overlay {
+            position: absolute; /* 绝对定位 */
+            top: 0; /* 距离顶部0像素 */
+            left: 0; /* 距离左侧0像素 */
+            width: 100%; /* 宽度100% */
+            height: 100%; /* 高度100% */
+            background-color: rgba(251, 192, 219, 0.7); /* 半透明粉色背景 */
+        }
+
+        /* 设置内容容器 */
+        .container {
+            text-align: center; /* 文字居中对齐 */
+            margin-top: 20%; /* 顶部间距 */
+            position: relative; /* 相对定位 */
+            z-index: 1; /* 设置堆叠顺序，保证内容容器在背景遮罩之上 */
+        }
+
+        /* 设置标题样式 */
+        h1 {
+            color: #fff; /* 文字颜色 */
+            font-size: 32px; /* 字体大小 */
+            margin-bottom: 20px; /* 底部间距 */
+        }
+
+        /* 设置段落样式 */
+        p {
+            color: #fff; /* 文字颜色 */
+            margin-top: 20px; /* 顶部间距 */
+            font-size: 18px; /* 字体大小 */
+            line-height: 1.5; /* 行高 */
+        }
+
+        /* 设置按钮容器样式 */
+        .btn-container {
+            margin-top: 40px; /* 顶部间距 */
+        }
+
+        /* 设置按钮样式 */
+        .btn {
+            display: inline-block; /* 内联块级元素 */
+            padding: 15px 30px; /* 上下左右内边距 */
+            margin: 0 20px; /* 左右外边距 */
+            border: 2px solid #fff; /* 边框 */
+            border-radius: 30px; /* 圆角 */
+            text-decoration: none; /* 文字无下划线 */
+            color: #fff; /* 文字颜色 */
+            font-weight: bold; /* 字体加粗 */
+            transition: all 0.3s ease; /* 过渡效果 */
+            background-color: #ff7eb9; /* 设置按钮背景颜色为粉色 */
+        }
+
+        /* 鼠标悬停按钮样式 */
+        .btn:hover {
+            background-color: #ff94c2; /* 悬停时更改背景颜色 */
+        }
+
+        /* 左边按钮样式 */
+        .btn-left {
+            background-color: #ff7eb9; /* 设置按钮背景颜色为粉色 */
+        }
+
+        /* 右边按钮样式 */
+        .btn-right {
+            background-color: #ff7eb9; /* 设置按钮背景颜色为粉色 */
+        }
+
+        /* 鼠标悬停左边按钮样式 */
+        .btn-left:hover {
+            background-color: #ff94c2; /* 悬停时更改背景颜色 */
+        }
+
+        /* 鼠标悬停右边按钮样式 */
+        .btn-right:hover {
+            background-color: #ff94c2; /* 悬停时更改背景颜色 */
+        }
+
+        /* 在小屏幕上设置样式 */
+        @media (max-width: 600px) {
+            /* 添加背景遮罩 */
+            /* 设置内容容器 */
+            .container {
+                text-align: center; /* 文字居中对齐 */
+                margin-top: 50%; /* 调整顶部间距为20%，或者根据需要进行调整 */
+                position: relative; /* 相对定位 */
+                width: auto; /* 设置容器宽度为页面宽度的80% */
+                height: auto;
+                z-index: 1; /* 设置堆叠顺序，保证内容容器在背景遮罩之上 */
+            }
+        }
+
+    </style>
+</head>
+<body>
+<!-- 背景遮罩 -->
+<div class="overlay"></div>
+<!-- 内容容器 -->
+<div class="container">
+    <!-- 标题 -->
+    <h1>尊敬的张女士，欢迎来到你的个人选项!</h1>
+    <!-- 段落 -->
+    <p>您可以选择点击下方左边按钮浏览我的项目网站，或者右边浏览您的个人专属主页。</p>
+    <!-- 按钮容器 -->
+    <div class="btn-container">
+        <!-- 左边按钮 -->
+        <a href="/protected/{{ user_id }}" class="btn btn-left">浏览项目</a>
+        <!-- 右边按钮 -->
+        <a href="/welcome/zyj" class="btn btn-right">浏览个人主页</a>
+    </div>
+</div>
+</body>
+</html>
