@@ -4,15 +4,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    /* 设置样式 */
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
     /* 设置背景图片 */
     background-image: url('https://picsum.photos/1920/1080');
-
 }
 
 /* 设置页面容器样式 */
@@ -30,7 +23,7 @@ body {
     /* 设置容器的定位方式为绝对定位 */
     position: absolute;
     /* 将容器的顶部边缘移动到页面的中间位置 */
-    top: 45%;
+    top: 40%;
     /* 将容器的左侧边缘移动到页面的中间位置 */
     left: 50%;
     /* 使用 transform 来实现负外边距，将 .container 元素的顶部和左侧移到页面的中间位置 */
@@ -72,14 +65,12 @@ body {
 
 /* 设置图标样式 */
 .module a i {
-    font-size: 50px;
+    font-size: 48px;
 }
 
 /* 设置图标悬停样式 */
-.module a:hover svg,
-.module a i.fa-phone:hover,
-.module a i.fa-envelope:hover,
-.module a i.fa-address-book:hover {
+.module a i.fas.fa-heartbeat:hover,
+.module a i.fas.fa-bed:hover {
     color: #0056b3; /* 设置鼠标悬停时图标的颜色 */
     transform: scale(1.2); /* 设置鼠标悬停时图标的缩放效果 */
 }
@@ -129,6 +120,7 @@ p {
     transition: background-color 0.3s ease, box-shadow 0.3s ease; /* 按钮背景颜色和阴影的过渡效果 */
     text-decoration: none; /* 取消下划线 */
 }
+
 /* 媒体查询 */
 @media (max-width: 1000px) {
     /* 设置页面容器样式 */
@@ -143,13 +135,24 @@ p {
         height: 270px; /* 高度自适应 */
         flex-grow: 1;
     }
+
     /* 设置图标样式 */
-.module a i {
-    font-size: 100px;
+    .module a i {
+        font-size: 100px;
+    }
+
+    .module a span {
+        font-size: 40px; /* 设置文字的字体大小为 16 像素 */
+    }
+
+    .floating-button {
+         bottom: 50px; /* 按钮距离页面底部的距离 */
+        right: 50px; /* 按钮距离页面右侧的距离 */
+        width: 155px; /* 按钮的宽度 */
+        height: 155px; /* 按钮的高度 */
+        font-size: 60px; /* 文字的大小 */
+        text-align: center; /* 文字居中 */
+        line-height: 155px;
+    }
 }
 
-.module a span {
-    font-size: 40px; /* 设置文字的字体大小为 16 像素 */
-}
-
-}

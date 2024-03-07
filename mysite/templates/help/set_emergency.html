@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设置紧急联系人</title>
+    <!-- 引入自定义 CSS 样式 -->
+    <link rel="stylesheet" href="../../static/css/set_emergency.css">
+</head>
+<body>
+<div class="container">
+    <h1>设置紧急联系人</h1>
+    <form id="emergencyContactForm" action="save_emergency" method="post">
+        <label for="name">姓名：</label>
+        <input type="text" id="name" name="name" placeholder="请输入姓名" required>
+        <label for="phone">电话号码：</label>
+        <input type="tel" id="phone" name="phone" placeholder="请输入电话号码" required>
+        <input type="submit" value="提交">
+    </form>
+    <!-- 显示添加的紧急联系人列表 -->
+    <div id="contactList">
+        <!-- 这里将显示添加的紧急联系人列表 -->
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    var globalName = ""; // 全局变量用于存储姓名
+    var globalPhone = ""; // 全局变量用于存储电话号码
+    $(document).ready(function () {
+        // 页面加载时自动加载用户紧急联系人列表
+        $.ajax({
+            type: 'GET',
+            url: '/help/get_emergency/{{ user_id }}',
+            success: function (response) {
+                console.log("紧急联系人:" + response)
+                // 显示用户的紧急联系人列表
+                var contactListDiv = $('#contactList');
+                response.forEach(function (contact) {
+                    var contactItemDiv = $('<div class="contactItem">');
+                    var deleteButton = $('<span class="deleteButton">[删除]</span>');
+                    deleteButton.click(function () {
+                        deleteContact("刷新", contactItemDiv);
+                    });
+                    globalName = contact.name;
+                    globalPhone = contact.phone;
+                    contactItemDiv.append('姓名：' + contact.name + '，电话号码：<span class="phone">' + contact.phone + '</span>');
+                    contactItemDiv.append(deleteButton);
+                    contactListDiv.append(contactItemDiv);
+                });
+            },
+            error: function (xhr, status, error) {
+                // 请求失败，输出错误信息
+                console.error('请求失败', error);
+            }
+        });
+    });
+
+    // 监听表单提交事件
+    $('#emergencyContactForm').submit(function (event) {
+        event.preventDefault(); // 阻止表单默认提交行为
+        // 获取表单数据
+        globalName = $('#name').val();
+        globalPhone = $('#phone').val();
+        // 发送 AJAX 请求
+        $.ajax({
+            type: 'POST',
+            url: '/help/save_emergency/{{ user_id }}',
+            data: {
+                name: globalName,
+                phone: globalPhone
+            },
+            success: function (response) {
+                console.log(response)
+                if (response==="未登录"){
+                    alert("该功能需要登录后使用！");
+                }
+                else if (response === "相同姓名的联系人已存在") {
+                    alert("该联系人已存在，请勿重复添加！");
+                } else {
+                    // 在页面下方显示添加的名单
+                    var contactListDiv = $('#contactList');
+                    var contactItemDiv = $('<div class="contactItem">');
+                    var deleteButton = $('<span class="deleteButton">[删除]</span>');
+                    deleteButton.click(function () {
+                        deleteContact("不刷新",contactItemDiv);
+                    });
+                    contactItemDiv.append('姓名：' + globalName + '，电话号码：<span class="phone">' + globalPhone + '</span>');
+                    contactItemDiv.append(deleteButton);
+                    contactListDiv.append(contactItemDiv);
+                }
+                // 清空表单
+                $('#name').val('');
+                $('#phone').val('');
+            },
+            error: function (xhr, status, error) {
+                // 请求失败，输出错误信息
+                console.error('请求失败', error);
+            }
+        });
+    });
+
+    // 删除紧急联系人
+    function deleteContact(method,contactItemDiv) {
+        $.ajax({
+            type: 'POST',
+            url: '/help/delete_emergency/{{ user_id }}',
+            data: {
+                name: globalName,
+            },
+            success: function (response) {
+                console.log(response)
+            },
+            success: function (response) {
+                console.log(response)
+                if (response === "删除成功") {
+                    // 删除前端界面对应的紧急联系人项
+                    $(contactItemDiv).remove();
+                    if(method==="刷新")
+                        location.reload();
+                } else {
+                    alert("删除失败，请稍后重试！");
+                }
+            },
+            error: function (xhr, status, error) {
+                // 请求失败，输出错误信息
+                console.error('请求失败', error);
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

@@ -15,31 +15,52 @@
 
         /* 设置容器样式 */
         .container {
-            max-width: 800px;
-            padding: 20px;
+            padding: 40px 40px; /*设置大小*/
             background-color: rgba(255, 255, 255, 0.6); /* 设置容器背景颜色和透明度 */
             border-radius: 20px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); /* 设置容器阴影 */
             position: absolute; /* 设置容器相对于视口的绝对定位 */
-            top: 50%; /* 设置容器顶部相对于视口的位置 */
+            top: 45%; /* 设置容器顶部相对于视口的位置 */
             left: 50%; /* 设置容器左侧相对于视口的位置 */
             transform: translate(-50%, -50%); /* 通过transform属性将容器居中显示 */
         }
 
-        /* 设置按钮样式 */
-        .btn {
-            padding: 10px 20px;
+        .button {
+            /*大小*/
+            padding: 15px 15px;
             background-color: #007bff; /* 设置按钮背景颜色 */
-            border: none; /* 移除按钮边框 */
-            border-radius: 5px; /* 设置按钮圆角 */
+            /*位置*/
+            position: relative; /* 设置父元素相对定位 */
+            left: 25%; /* 按钮距离页面左侧的距离为页面宽度的50% */
+
+            /*按钮内文字*/
+            font-size: 20px;
+
+            /*样式*/
+            border-radius: 10px; /* 设置按钮圆角 */
             color: #fff; /* 设置按钮文字颜色 */
+            border: none; /* 移除按钮边框 */
             cursor: pointer; /* 设置鼠标悬停时的样式为手型 */
         }
 
         /* 设置按钮悬停时的背景颜色 */
-        .btn:hover {
-            background-color: #0056b3;
+        .button:hover {
+            background-color: #cb3636;
         }
+
+        h1 {
+            text-align: center; /* 居中对齐 */
+            font-size: 30px; /* 设置字体大小为36像素 */
+            margin: 1px 0; /* 上下边距均为50像素，左右边距为0 */
+        }
+
+
+        p {
+            font-size: 20px; /* 设置字体大小为36像素 */
+            line-height: 1.5; /* 设置行高为1.6倍字体大小，用于提高可读性 */
+            text-align: center; /* 居中对齐 */
+        }
+
 
         /* 设置隐藏视频元素 */
         #video {
@@ -77,13 +98,52 @@
             background-color: #2962ff; /* 鼠标悬停时按钮的背景颜色 */
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.7); /* 鼠标悬停时按钮的阴影效果 */
         }
+
+        /* 媒体查询 */
+        @media (max-width: 1000px) {
+            /* 设置容器样式 */
+            .floating-button {
+                bottom: 50px; /* 按钮距离页面底部的距离 */
+                right: 50px; /* 按钮距离页面右侧的距离 */
+                width: 155px; /* 按钮的宽度 */
+                height: 155px; /* 按钮的高度 */
+                font-size: 60px; /* 文字的大小 */
+                text-align: center; /* 文字居中 */
+                line-height: 155px;
+            }
+
+            .button {
+                padding: 20px 20px;
+                background-color: #007bff;
+                color: #fff;
+                border-radius: 20px;
+                cursor: pointer;
+                font-size: 36px;
+                display: inline-block; /* 将按钮设置为内联块元素 */
+                position: relative; /* 相对定位 */
+                left: 25%; /* 沿着水平方向上移动按钮的50% */
+            }
+
+            h1 {
+                text-align: center; /* 居中对齐 */
+                font-size: 50px; /* 设置字体大小为36像素 */
+            }
+
+            p {
+                font-size: 34px; /* 设置字体大小为36像素 */
+                line-height: 1; /* 设置行高为1.6倍字体大小，用于提高可读性 */
+                text-align: center; /* 居中对齐 */
+            }
+
+
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <h1 style="text-align: center;">摔倒识别</h1>
     <p>点击下方按钮检测摔倒情况</p>
-    <button class="btn" onclick="checkFall()" style="display: block; margin: 0 auto;">摔倒检测</button>
+    <button class="button" onclick="checkFall()">摔倒检测</button>
 </div>
 
 <!-- 新增视频元素 -->
@@ -100,6 +160,7 @@
             })
             .catch(function (err) {
                 console.log('摄像头访问失败：', err);
+                alert('摄像头访问失败，请检查您的权限设置或浏览器兼容性。');
             });
     }
 

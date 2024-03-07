@@ -24,7 +24,7 @@
     <!-- 模块部分 -->
     <div class="module">
         <!-- 第一个模块链接 -->
-        <a href="help/fall_detection">
+        <a href="/help/fall_detection">
             <svg xmlns="http://www.w3.org/2000/svg" height="48" width="50" viewBox="0 0 512 512">
                 <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                 <path fill="#000000"
@@ -32,11 +32,11 @@
             </svg>
             <span>摔倒识别</span></a>
         <!-- 第二个模块链接 -->
-        <a href="/help/emergency_contact"><i class="fa-regular fa-address-book"></i><span>设置紧急联系人</span></a>
+        <a href="/help/set_emergency/{{ user_id }}"><i class="fa-regular fa-address-book"></i><span>设置紧急联系人</span></a>
         <!-- 第三个模块链接 -->
-        <a href="/help/call_for_help"><i class="fa-solid fa-phone"></i><span>电话求助</span></a>
+        <a href="/help/call_for_help/{{ user_id }}"><i class="fa-solid fa-phone"></i><span>电话求助</span></a>
         <!-- 第四个模块链接 -->
-        <a href="/help/sms_for_help"><i class="fa-regular fa-envelope"></i><span>短信求助</span></a>
+        <a href="/help/sms_for_help/{{ user_id }}"><i class="fa-regular fa-envelope"></i><span>短信求助</span></a>
     </div>
 </div>
 </body>

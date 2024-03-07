@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Weather App</title>
+    <title>天气查询</title>
     <link rel="stylesheet" href="../../static/css/weather.css"> <!--上上层目录下的static文件夹下的css文件夹下的css文件-->
     <!-- 引入 Font Awesome 图标库 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -23,6 +23,7 @@
     </div>
 
     <div class="weather-info">
+        <span id="city_display"></span>
         <span id="temperature"></span>
         <span id="weather"></span>
     </div>
@@ -49,6 +50,7 @@
                     .then(response => response.json())
                     .then(data => {
                         // 将天气数据显示在页面上
+                        document.getElementById('city_display').textContent = `城市：${data.city}`;
                         document.getElementById('temperature').textContent = `温度：${data.temperature}`;
                         document.getElementById('weather').textContent = `天气：${data.weather}`;
                         console.log(data);
@@ -68,6 +70,12 @@
         var province = document.getElementById('province').value;
         var city = document.getElementById('city').value;
 
+        if (province==='' || city==='') {
+            if(province === '')
+                alert("请选择省份！");
+            else alert("请选择城市！");
+        }
+
         // 发送 POST 请求到后端
         fetch('/tools/weather/get_weather', {
             method: 'POST',
@@ -81,6 +89,7 @@
             .then(response => response.json())
             .then(data => {
                 // 将天气数据显示在页面上
+                document.getElementById('city_display').textContent = `城市：${data.city}`;
                 document.getElementById('temperature').textContent = `温度：${data.temperature}`;
                 document.getElementById('weather').textContent = `天气：${data.weather}`;
                 console.log(data);

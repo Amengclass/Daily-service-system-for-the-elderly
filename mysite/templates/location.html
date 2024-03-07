@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="container">
-    <p>点击按钮获取您当前位置：</p>
+    <p>点击按钮获取您当前位置</p>
     <button id="getLocationButton">获取位置</button>
     <p id="ip"></p>
     <p id="location"></p>
@@ -25,10 +25,10 @@
                 url: "/location/info",
                 type: "GET",
                 success: function (data) {
+                    console.log("前后端交互成功");
+                    console.log(data);
                     $('#ip').text('IP地址: ' + data.ip);
                     $('#location').text('地理位置: ' + data.location);
-                    console.log("访问成功了");
-                    console.log(data);
                 },
                 error: function (xhr, status, error) {
                     console.error('获取IP信息时出错:', error);

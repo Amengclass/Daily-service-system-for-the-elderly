@@ -3,34 +3,49 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f5f5f5;
+     /* 设置背景图片 */
+    background-image: url('https://picsum.photos/1920/1080');
 }
 
 .container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 30px;
-    border-radius: 10px;
-    background-color: #fff;
+    text-align: center; /* 居中对齐容器中的内容 */
+    max-width: 500px; /* 控制PC上的最大宽度 */
+    width: 75%; /* 控制手机自动调整宽度 */
+    height: auto; /* 控制手机自动调整高度 */
+
+    position: absolute; /* 使用绝对定位 */
+    top: 45%; /* 上边距为50% */
+    left: 50%; /* 左边距为50% */
+
+    transform: translate(-50%, -50%); /* 将容器移动到屏幕中间 */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.7); /* 设置透明度 */
+    border-radius: 20px; /* 设置圆角 */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+
 p {
-    font-size: 18px;
-    color: #333;
+    font-size: 40px; /* 设置字体大小为36像素 */
+    line-height: 1.6; /* 设置行高为1.6倍字体大小，用于提高可读性 */
+    text-align: center; /* 居中对齐 */
 }
 
+
+
 button {
-    padding: 10px 20px;
+    padding: 20px 20px;
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 20px;
+    display: inline-block; /* 将按钮设置为内联块元素，以便它可以在行内居中 */
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #b3002a;
 }
 
 /*浮动按钮的css设置*/
@@ -54,4 +69,32 @@ button:hover {
 .floating-button:hover {
     background-color: #2962ff; /* 鼠标悬停时按钮的背景颜色 */
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.7); /* 鼠标悬停时按钮的阴影效果 */
+}
+
+/* 媒体查询 */
+@media (max-width: 1000px) {
+    .floating-button {
+        bottom: 50px; /* 按钮距离页面底部的距离 */
+        right: 50px; /* 按钮距离页面右侧的距离 */
+        width: 155px; /* 按钮的宽度 */
+        height: 155px; /* 按钮的高度 */
+        font-size: 60px; /* 文字的大小 */
+        text-align: center; /* 文字居中 */
+        line-height: 155px;
+    }
+
+    button {
+    padding: 20px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 40px;
+    display: inline-block; /* 将按钮设置为内联块元素，以便它可以在行内居中 */
+}
+    p {
+    font-size: 45px; /* 设置字体大小为36像素 */
+    line-height: 1; /* 设置行高为1.6倍字体大小，用于提高可读性 */
+    text-align: center; /* 居中对齐 */
+}
 }

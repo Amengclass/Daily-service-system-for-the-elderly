@@ -15,6 +15,7 @@ body {
 
 }
 
+
 /* 设置页面容器样式 */
 .container {
     /* 设置容器的最大宽度为800px */
@@ -105,13 +106,6 @@ p {
     color: #666;
 }
 
-
-.floating-button:hover {
-    background-color: #2962ff; /* 鼠标悬停时按钮的背景颜色 */
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7); /* 鼠标悬停时按钮的阴影效果 */
-}
-
-
 /*浮动按钮的css设置*/
 .floating-button {
     position: fixed;
@@ -128,6 +122,11 @@ p {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* 按钮的阴影效果 */
     transition: background-color 0.3s ease, box-shadow 0.3s ease; /* 按钮背景颜色和阴影的过渡效果 */
     text-decoration: none; /* 取消下划线 */
+}
+
+.floating-button:hover {
+    background-color: #2962ff; /* 鼠标悬停时按钮的背景颜色 */
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7); /* 鼠标悬停时按钮的阴影效果 */
 }
 
 /* 媒体查询 */
