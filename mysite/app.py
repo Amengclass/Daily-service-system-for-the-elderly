@@ -7,13 +7,15 @@ import time
 
 # 假设的用户登录数据
 users = {
-    'user1': {'password': '123456', 'name': '谢海峰'},
+    'zyj': {'password': 'zyj123', 'name': '张逸筠'},
+    'xhf110': {'password': 'xie910love', 'name': '谢海峰'},
     'user2': {'password': 'password2', 'name': 'User Two'}
 }
 
 # 设置紧急联系人数据
 emergency_contacts = {
-    'user1': [{'name': "谢海峰", "phone": "13877678416"}, {"name": "中国移动", "phone": "10086"}],
+    'zyj': [{'name': "谢海峰", "phone": "13877678416"}, {"name": "警察", "phone": "110"}],
+    'xhf110': [{'name': "谢海峰", "phone": "13877678416"}, {"name": "中国移动", "phone": "10086"}],
     'user2': [{"name": "紧急联系人2", "phone": "987654321"}],
     # 添加更多紧急联系人...
 }  # 列表里元素是字典，其中每个字典的值又是一个字典
@@ -221,14 +223,14 @@ def call(user_id=None):
 @app.route('/help/sms_for_help')
 @app.route('/help/sms_for_help/<user_id>')
 def sms(user_id=None):
+    print("进来了sms")
     if user_id is None or user_id not in session:
         return redirect(url_for('login'))
     if user_id in emergency_contacts:
-        print(emergency_contacts[user_id])
+        print("emergency_contacts：",emergency_contacts[user_id])
+        if not emergency_contacts[user_id]:
+            return redirect(url_for('set_emergency', user_id=user_id))
         return render_template('help/sms.html', emergency_contacts=emergency_contacts[user_id])
-    else:
-        return redirect(url_for('set_emergency', user_id=user_id))
-
 
 # 姿势识别
 @app.route('/video_feed')
