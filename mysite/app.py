@@ -7,15 +7,22 @@ import time
 
 # 假设的用户登录数据
 users = {
-    'zyj': {'password': 'zyj123', 'name': '张逸筠'},
-    'xhf110': {'password': 'xie910love', 'name': '谢海峰'},
-    'user2': {'password': 'password2', 'name': 'User Two'}
+    'xwy': {'password': 'xwy', 'name': '向维茵'},
+    'zxb': {'password': 'zxb', 'name': '郑兴邦'},
+    'ny': {'password': 'ny', 'name': '农苑'},
+    'zyj': {'password': 'zyj', 'name': '张逸筠'},
+    'xhf': {'password': 'xhf', 'name': '谢海峰'},
 }
 
 # 设置紧急联系人数据
 emergency_contacts = {
+    'xwy': [{'name': "谢海峰", "phone": "13877678416"}, {"name": "警察", "phone": "110"},
+            {'name': "消防", "phone": "119"}, ],
+    'zxb': [{'name': "谢海峰", "phone": "13877678416"}, {'name': "消防", "phone": "119"},
+            {"name": "警察", "phone": "110"}],
+    'ny': [{'name': "消防", "phone": "119"}, {"name": "警察", "phone": "110"}],
     'zyj': [{'name': "谢海峰", "phone": "13877678416"}, {"name": "警察", "phone": "110"}],
-    'xhf110': [{'name': "谢海峰", "phone": "13877678416"}, {"name": "中国移动", "phone": "10086"}],
+    'xhf': [{'name': "谢海峰", "phone": "13877678416"}, {"name": "中国移动", "phone": "10086"}],
     'user2': [{"name": "紧急联系人2", "phone": "987654321"}],
     # 添加更多紧急联系人...
 }  # 列表里元素是字典，其中每个字典的值又是一个字典
@@ -40,6 +47,11 @@ app.secret_key = 'your_secret_key'
 def login():
     return render_template('login.html')
 
+
+@app.route('/come') #张逸筠的引导页
+@app.route('/come/<user_id>')
+def come(user_id = None):
+    return render_template('come.html',user_id=user_id)
 
 @app.route('/sign_up', methods=['POST'])  # 注册处理
 def sign_up():
@@ -73,13 +85,13 @@ def sign_in():
         session[user_id] = True
         return jsonify({'user_id': user_id, 'status': "sign in success"})
     else:
-        # 如果是新游客，注册并记录会话，然后登录
+        # 如果是新游客，注册并记录会话
         if user_type == 'guest':
             users[user_id] = {'password': password}
             session[user_id] = True
             return jsonify({'user_id': user_id, 'status': "sign in success"})
-        # 如果不是游客，直接登录
-        return jsonify({'user_id': user_id, 'status': "sign in failed"})
+        # 如果不是游客
+        return jsonify({'user_id': user_id, 'status': "Wrong password"})
 
 
 @app.route('/protected')  # 受保护的界面，验证登录状态
@@ -99,6 +111,7 @@ def index(user_id=None):
 
 
 @app.route('/zyj')  # 设置主页目录
+@app.route('/welcome/zyj')  # 设置主页目录
 def ztj():
     return render_template('zyj.html')
 
@@ -227,10 +240,11 @@ def sms(user_id=None):
     if user_id is None or user_id not in session:
         return redirect(url_for('login'))
     if user_id in emergency_contacts:
-        print("emergency_contacts：",emergency_contacts[user_id])
+        print("emergency_contacts：", emergency_contacts[user_id])
         if not emergency_contacts[user_id]:
             return redirect(url_for('set_emergency', user_id=user_id))
         return render_template('help/sms.html', emergency_contacts=emergency_contacts[user_id])
+
 
 # 姿势识别
 @app.route('/video_feed')

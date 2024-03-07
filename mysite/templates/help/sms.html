@@ -62,8 +62,17 @@
                 smsLink += ",";
             }
         });
-        smsLink += '?body=' + encodedSMSContent;
-
+        if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+            // 如果是 iOS 设备
+            smsLink += '&body=' + encodedSMSContent;
+        } else if (navigator.userAgent.match(/Android/i)) {
+            // 如果是 Android 设备
+          smsLink += '?body=' + encodedSMSContent;
+        } else {
+            // 其他设备，可能无法直接打开短信应用
+            alert('无法直接打开短信应用。');
+            return;
+        }
         // 打开短信应用
         window.location.href = smsLink;
     }

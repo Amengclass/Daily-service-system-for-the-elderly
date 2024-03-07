@@ -123,13 +123,20 @@ signIn.onclick = function () {
                 if (data.status === 'sign in success') {
                     // 获取注册成功的用户名
                     var user_id = data.user_id;
+                    console.log("这里是user_id" + user_id);
+                    /*这部分是张逸筠部分*/
+                    if (user_id === 'zyj')
+                        window.location.href = '/come/'+user_id;
+                    else {
+                        // 构建带参数的 URL
+                        var url = '/protected/' + encodeURIComponent(user_id);
 
-                    // 构建带参数的 URL
-                    var url = '/protected/' + encodeURIComponent(user_id);
-
-                    // 页面重定向到带参数的 URL
-                    window.location.href = url;
-
+                        // 页面重定向到带参数的 URL
+                        window.location.href = url;
+                    }
+                }
+                if (data.status === 'Wrong password') {
+                    alert('登录失败，请检查用户名和密码是否正确！');
                 }
 
             })
@@ -216,3 +223,6 @@ function generateRandomString(length) {
     }
     return result;
 }
+
+
+
