@@ -32,21 +32,27 @@
             type: 'GET',
             url: '/help/get_emergency/{{ user_id }}',
             success: function (response) {
-                console.log("紧急联系人:" + response)
-                // 显示用户的紧急联系人列表
-                var contactListDiv = $('#contactList');
-                response.forEach(function (contact) {
-                    var contactItemDiv = $('<div class="contactItem">');
-                    var deleteButton = $('<span class="deleteButton">[删除]</span>');
-                    deleteButton.click(function () {
-                        deleteContact("刷新", contactItemDiv);
+                /*如果返回联系人数组才会运行，否则不会有任何反应*/
+                if (Array.isArray(response)) {
+                    console.log("紧急联系人:" + response)
+                    // 显示用户的紧急联系人列表
+                    var contactListDiv = $('#contactList');
+                    response.forEach(function (contact) {
+                        var contactItemDiv = $('<div class="contactItem">');
+                        var deleteButton = $('<span class="deleteButton">[删除]</span>');
+                        deleteButton.click(function () {
+                            deleteContact("刷新", contactItemDiv);
+                        });
+                        globalName = contact.name;
+                        globalPhone = contact.phone;
+                        contactItemDiv.append('姓名：' + contact.name + '，电话号码：<span class="phone">' + contact.phone + '</span>');
+                        contactItemDiv.append(deleteButton);
+                        contactListDiv.append(contactItemDiv);
                     });
-                    globalName = contact.name;
-                    globalPhone = contact.phone;
-                    contactItemDiv.append('姓名：' + contact.name + '，电话号码：<span class="phone">' + contact.phone + '</span>');
-                    contactItemDiv.append(deleteButton);
-                    contactListDiv.append(contactItemDiv);
-                });
+                } else { /*不是数组*/
+                    // 处理response不是数组的情况，例如空列表或者其他类型的数据
+                    console.log("这里是set_emergency.html界面的输出:没有任何紧急联系人列表！");
+                }
             },
             error: function (xhr, status, error) {
                 // 请求失败，输出错误信息
@@ -71,10 +77,9 @@
             },
             success: function (response) {
                 console.log(response)
-                if (response==="未登录"){
+                if (response === "未登录") {
                     alert("该功能需要登录后使用！");
-                }
-                else if (response === "相同姓名的联系人已存在") {
+                } else if (response === "相同姓名的联系人已存在") {
                     alert("该联系人已存在，请勿重复添加！");
                 } else {
                     // 在页面下方显示添加的名单
@@ -82,7 +87,7 @@
                     var contactItemDiv = $('<div class="contactItem">');
                     var deleteButton = $('<span class="deleteButton">[删除]</span>');
                     deleteButton.click(function () {
-                        deleteContact("不刷新",contactItemDiv);
+                        deleteContact("不刷新", contactItemDiv);
                     });
                     contactItemDiv.append('姓名：' + globalName + '，电话号码：<span class="phone">' + globalPhone + '</span>');
                     contactItemDiv.append(deleteButton);
@@ -100,7 +105,7 @@
     });
 
     // 删除紧急联系人
-    function deleteContact(method,contactItemDiv) {
+    function deleteContact(method, contactItemDiv) {
         $.ajax({
             type: 'POST',
             url: '/help/delete_emergency/{{ user_id }}',
@@ -115,7 +120,7 @@
                 if (response === "删除成功") {
                     // 删除前端界面对应的紧急联系人项
                     $(contactItemDiv).remove();
-                    if(method==="刷新")
+                    if (method === "刷新")
                         location.reload();
                 } else {
                     alert("删除失败，请稍后重试！");

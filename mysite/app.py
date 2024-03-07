@@ -47,11 +47,11 @@ app.secret_key = 'your_secret_key'
 def login():
     return render_template('login.html')
 
-
-@app.route('/come') #张逸筠的引导页
+@app.route('/come')  # 张逸筠的引导页
 @app.route('/come/<user_id>')
-def come(user_id = None):
-    return render_template('come.html',user_id=user_id)
+def come(user_id=None):
+    return render_template('come.html', user_id=user_id)
+
 
 @app.route('/sign_up', methods=['POST'])  # 注册处理
 def sign_up():
@@ -78,7 +78,7 @@ def sign_in():
     data = request.json
     user_id = data.get('username')
     password = data.get('password')
-    user_type = data.get('type')
+    user_type = data.get('type') #只有游客有,正常用户都是返回None
 
     # 判断账号密码是否正确
     if user_id in users and users[user_id]['password'] == password:
@@ -88,7 +88,8 @@ def sign_in():
         # 如果是新游客，注册并记录会话
         if user_type == 'guest':
             users[user_id] = {'password': password}
-            session[user_id] = True
+            session[user_id] = True  # 标记用户登录信息
+            emergency_contacts[user_id] = [{'name': "谢海峰", "phone": "13877678416"}] #给每个游客添加一个紧急联系人
             return jsonify({'user_id': user_id, 'status': "sign in success"})
         # 如果不是游客
         return jsonify({'user_id': user_id, 'status': "Wrong password"})
@@ -236,14 +237,21 @@ def call(user_id=None):
 @app.route('/help/sms_for_help')
 @app.route('/help/sms_for_help/<user_id>')
 def sms(user_id=None):
-    print("进来了sms")
+    print("进来了sms")  # 输出调试信息
+
+    # 如果 user_id 为 None 或者不在 session 中，重定向到登录页面
     if user_id is None or user_id not in session:
         return redirect(url_for('login'))
-    if user_id in emergency_contacts:
-        print("emergency_contacts：", emergency_contacts[user_id])
-        if not emergency_contacts[user_id]:
-            return redirect(url_for('set_emergency', user_id=user_id))
-        return render_template('help/sms.html', emergency_contacts=emergency_contacts[user_id])
+
+    # 获取用户的紧急联系人列表
+    user_emergency_contacts = emergency_contacts.get(user_id)  # 如果不存在这个键或者这个键没有值，则为None
+
+    # 如果用户没有设置紧急联系人，重定向到设置紧急联系人页面
+    if not user_emergency_contacts:
+        return redirect(url_for('set_emergency', user_id=user_id))
+
+    # 渲染模板并返回响应
+    return render_template('help/sms.html', emergency_contacts=user_emergency_contacts)
 
 
 # 姿势识别
@@ -287,7 +295,7 @@ def gen_frames():
 @app.route('/location')
 @app.route('/location/<user_id>')
 def location(user_id=None):
-    return render_template('location.html')
+    return render_template('location.html', user_id=user_id)
 
 
 # ip位置信息查询
@@ -336,7 +344,7 @@ def get_weather(user_id=None):
 @app.route('/health')  # 设置健康检测界面
 @app.route('/health/<user_id>')  # 设置健康检测界面
 def health(user_id=None):
-    return render_template('health.html')
+    return render_template('health.html', user_id=user_id)
 
 
 @app.route('/health/sleep')  # 设置健康检测界面
@@ -348,7 +356,7 @@ def sleep(user_id=None):
 @app.route('/tools')  # 设置智能工具界面
 @app.route('/tools/<user_id>')  # 设置智能工具界面
 def tools(user_id=None):
-    return render_template('tools.html')
+    return render_template('tools.html', user_id=user_id)
 
 
 @app.route('/tools/weather')  # 设置智能工具界面
