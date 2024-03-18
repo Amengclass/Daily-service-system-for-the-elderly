@@ -12,7 +12,7 @@
 <body>
 <div class="container">
     <!-- 头像 -->
-    <img src="{{ url_for('static', filename='pictures/zyj.jpg') }}" alt="Profile Picture" class="profile-picture">
+    <img src="{{ url_for('static', filename='/zyj/pictures/zyj.jpg') }}" alt="Profile Picture" class="profile-picture">
     <!-- 名字 -->
     <div class="name">张老八</div>
     <!-- 介绍 -->
@@ -32,6 +32,7 @@
     <select id="song-list" onchange="changeSong(this.value)">
         <!-- 歌曲选项将由 JavaScript 动态生成 -->
     </select>
+    <button onclick="showBeautyPhotos()">查看美照</button>
 </div>
 
 <script>

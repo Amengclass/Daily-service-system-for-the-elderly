@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18岁 - Your AI Assistant</title>
+    <!-- 添加 Font Awesome 图标库链接 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fdfcfc;
+        }
+
+        /*整个空间容器*/
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /*---------------------------------------侧边栏区域 -------------------------------------------*/
+        /*侧边栏容器(用于占满整个空间)*/
+        .left-container {
+            width: 260px;
+            overflow: hidden;
+            display: flex;
+            transition: transform 0.3s ease;
+        }
+
+        /*侧边栏容器*/
+        .left-container1 {
+            flex: 1;
+            background: #f5f5f5;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            opacity: 1; /* 将透明度设置为1，使元素不透明 */
+        }
+
+        /*侧边栏区域关闭时*/
+        .left-container.closed {
+            flex: 0 0 0; /* 设置占据宽度的15% */
+            transform: translateX(0);
+        }
+
+        /*侧边栏里的创建新聊天的容器*/
+        .newchat-container {
+            height: 5.5%;
+            display: block;
+            position: relative;
+            margin-top: 5%;
+            margin-bottom: 5%;
+            margin-right: 3%;
+
+        }
+
+        /*新聊天容器里的(铅笔)图标*/
+        .newchat-svg {
+            width: 35%;
+            height: 35%;
+            position: absolute;
+            left: 72%;
+            top: 20%;
+        }
+
+        /*左边容器的链接*/
+        .left-container1 a {
+            cursor: pointer; /* 将链接元素的鼠标光标设置为手型 */
+            font-size: 14px;
+            display: block;
+            color: black;
+            margin-left: 10px;
+            margin-right: 10px;
+            border-radius: 10px;
+            text-decoration: none;
+            padding: 10px 12px;
+            transition: background-color 0.3s;
+        }
+
+        .left-container1 a:hover {
+            background-color: #dedcdc;
+        }
+
+        .close-btn {
+            display: none;
+        }
+
+        /*----------------------------------------------侧边栏区域结束--------------------------------------------------*/
+
+
+        /*----------------------------------------------右边聊天区域结束--------------------------------------------------*/
+        /*右部总容器*/
+        .right-container {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /*右部容器1*/
+        .right-container1 {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            flex-direction: column;
+            transition: visibility 0.3s ease; /* 添加过渡效果 */
+        }
+
+        /*右部容器2*/
+        .right-container2 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 水平居中 */
+            overflow: hidden;
+        }
+
+        /*右部容器3*/
+        .right-container3 {
+            flex: 1;
+            margin-left: 2vw;
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .chat-box {
+            width: auto;
+            height: auto;
+            position: relative;
+            right: 1.1vw;
+            max-width: 759px;
+        }
+
+        .openbtn {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            color: white;
+            border-radius: 5px;
+            transform: translateY(-50%);
+            width: 20px; /* 设置按钮宽度 */
+            height: 40px; /* 设置按钮高度 */
+            background-color: #a9a8a8; /* 设置按钮背景颜色 */
+            border: none; /* 移除边框 */
+            cursor: pointer; /* 设置鼠标样式为手型 */
+            transition: background-color 0.3s ease; /* 添加过渡效果 */
+            display: flex; /* 使用 Flexbox 布局 */
+            justify-content: center; /* 水平居中对齐 */
+            align-items: center; /* 垂直居中对齐 */
+        }
+
+
+        .openbtn:hover {
+            background-color: black; /* 悬停时改变背景颜色 */
+            opacity: 1;
+        }
+
+        .input-container {
+            height: 85px;
+            width: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* 水平居中 */
+        }
+
+        .input-container1 {
+            width: 100%; /* 使用宽度 100% 填充父元素的宽度 */
+            max-width: 768px;
+            max-height: 52px;
+            background: white;
+            position: relative;
+            right: 0.25vw;
+            margin-left: 0.25vw;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center; /* 水平居中 */
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .input-container span {
+            color: grey;
+            /* 如果需要，您可以在此处添加样式 */
+            font-size: 12px;
+            margin: auto auto;
+        }
+
+
+        .inputClass {
+            font-size: 16px;
+            flex: 1;
+            padding: 2%;
+            border: none;
+            outline: none;
+        }
+
+
+        .buttonClass {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            margin-right: 0.5%;
+            border-radius: 13px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+
+        #sendButton:hover {
+            background-color: #186518;
+        }
+
+
+        /*对话框*/
+        .message {
+            margin-left: 1vw;
+            margin-right: 4vw;
+            margin-top: 3%; /*对话框之间的距离*/
+            align-items: flex-end;
+            display: block;
+        }
+
+        .message p {
+            padding: 10px;
+            word-wrap: break-word;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            left: 1.2vw;
+            margin-right: 0.5vw;
+            border-radius: 0 15px 15px 15px;
+
+            display: inline-block; /* 容器根据内容自适应 */
+        }
+
+        /*用户消息框*/
+        .user-message p {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        /*机器人消息框*/
+        .bot-message p {
+            background-color: #2979ff;
+            color: #fff;
+        }
+
+        /*编辑对话框才会出现的保存按钮*/
+        #saveButton {
+            font-size: .875rem;
+            padding: 10px 20px;
+            background-color: rgba(16, 163, 127, 0.9);
+            color: #fff;
+            border: none; /* 取消按钮的外边框 */
+            transition: background-color 0.3s ease; /* 添加过渡效果 */
+            cursor: pointer; /* 设置鼠标手势为指针 */
+            margin-right: 5px;
+            border-radius: 10px;
+        }
+
+        #cancelButton {
+            font-size: .875rem;
+            padding: 10px 20px;
+            background-color: #f5f2f2;
+            color: black;
+            border: 1px solid grey; /* 设置边框为红色 */
+            transition: background-color 0.3s ease; /* 添加过渡效果 */
+            cursor: pointer; /* 设置鼠标手势为指针 */
+            margin-left: 5px;
+            border-radius: 10px;
+        }
+
+        /* 悬停时使按钮颜色变暗 */
+        #saveButton:hover {
+            background-color: rgba(7, 80, 62, 0.8); /* 减少透明度以使颜色变暗 */
+        }
+
+        #cancelButton:hover {
+            background-color: #dedcdc; /* 悬停时改变背景颜色 */
+        }
+
+        .icon {
+            font-size: 21px;
+            margin-right: 5px;
+        }
+
+        /*-------------------------------顶部导航栏样式-------------------*/
+        .top-navbar {
+            display: none; /*一开始隐藏*/
+            background-color: #fdfcfc;
+            border: 1px solid #cecccc;
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 100%; /* 将宽度设置为100%，使其占据整个视口宽度 */
+            height: 43px;
+        }
+
+        #top-navbar a {
+            font-size: 1.2em;
+            color: black; /* 导航链接文字颜色 */
+            text-decoration: none; /* 导航链接去掉下划线 */
+            margin-right: 20px; /* 导航链接之间的右边距 */
+        }
+
+        #top-navbar a:hover {
+            background-color: #8be7ea;
+        }
+
+        /*子元素图标*/
+        #bars {
+            position: absolute;
+            left: 3.2%;
+            top: 20%;
+        }
+
+        /*新对话(铅笔)界面图标*/
+        .custom-svg {
+            position: absolute;
+            right: 3.5%;
+            top: 25%;
+        }
+
+        /*------------------------顶部导航栏结束-------------------*/
+
+
+        /*----------------------------------------------以下是样式适配手机区域--------------------------------------------------*/
+        @media screen and (max-width: 768px) {
+            /* 覆盖层样式 */
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+                z-index: 998; /* 位于左边容器下面但在其他内容上面 */
+                display: none; /* 初始状态下隐藏 */
+                transition: transform 0.3s ease;
+            }
+
+            /*侧边栏总容器*/
+            .left-container {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                z-index: 998; /* 设置左边区域层级 */
+
+                transition: transform 0.5s ease;
+                transform: translateX(-100%)
+            }
+
+            .left-container.open {
+                transform: translateX(0); /* 将左侧栏移回屏幕内 */
+            }
+
+            /*真正的侧边栏区域*/
+            .left-container1 {
+                background: #fdfcfc;
+                flex: 0.85; /*这是调节侧边栏的比例大小的*/
+            }
+
+            /*---------------------------侧边栏关闭按钮--------------------*/
+            .close-btn {
+                width: 2.5rem; /* 按钮宽度 */
+                height: 2.5rem; /* 按钮高度 */
+                background: rgba(255, 255, 255, 0); /* 背景透明 */
+                border: 2px solid #faf9f9; /* 边框 */
+                color: #faf9f9; /* 文本颜色 */
+                font-size: 28px; /* 字体大小 */
+                cursor: pointer; /* 鼠标样式为指针 */
+                outline: none; /* 去掉默认的轮廓样式 */
+
+                /*左边距和上边距*/
+                margin-left: .5rem;
+                margin-top: 0.85rem;
+                z-index: 999;
+            }
+
+            .close-btn:hover {
+                background: #8be7ea; /* 鼠标悬停时的背景色 */
+            }
+
+            /*---------------------------侧边栏关闭按钮结束--------------------*/
+            /*----------------------------右部分区域--------------------*/
+            .right-container {
+                max-width: 100%;
+            }
+
+            .right-container3 {
+                margin-left: 5vw;
+            }
+
+            .chat-box {
+                max-width: 712px;
+            }
+
+            .input-container {
+                height: 90px;
+                margin-bottom: 2%;
+            }
+
+            .input-container1 {
+                height: 60%;
+                margin-left: 2.5vw;
+                margin-right: 2vw;
+                max-width: 92vw;
+            }
+
+            /*对话框*/
+            .message {
+                margin-left: 1vw;
+                margin-right: 5.5vw;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="overlay" id="overlay"></div>
+    <!--左边会话区域-->
+    <div class="left-container" id="left-container" onclick="handleClick(event)">
+        <div class="left-container1" id="left-container1">
+            <div class="newchat-container" id="newchat-container">
+                <a herf="#" onclick="newchat()"> New chat
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20px " class="newchat-svg">
+                        <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                        <path d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="left-container2" id="left-container2">
+                <a href="#">首页
+                    <button class="threed-btn"
+                            data-state="closed">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                             class="icon-md">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M3 12C3 10.8954 3.89543 10 5 10C6.10457 10 7 10.8954 7 12C7 13.1046 6.10457 14 5 14C3.89543 14 3 13.1046 3 12ZM10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12ZM17 12C17 10.8954 17.8954 10 19 10C20.1046 10 21 10.8954 21 12C21 13.1046 20.1046 14 19 14C17.8954 14 17 13.1046 17 12Z"
+                                  fill="currentColor"></path>
+                        </svg>
+                    </button>
+
+                </a>
+                <a href="#">产品</a>
+                <a href="#">关于我们</a>
+                <a href="#">联系我们</a>
+            </div>
+        </div>
+        <!-- 关闭按钮 -->
+        <button class="close-btn" id="close-btn">&times;</button>
+    </div>
+
+    <!--右边聊天区域-->
+    <div class="right-container" id="right-container">
+        <div class="right-container1" id="right-container1">
+            <div clas class="right-container2" id="right-container2">
+                <!--这个只有在手机界面才会显示的顶部导航栏，包含打开侧边栏图标和创建新聊天图标-->
+                <div class="top-navbar" id="top-navbar">
+                    <!-- 侧边栏图标 -->
+                    <a href="#" id="bars" onclick="toggleSidebar()"><i class="fas fa-bars"></i></a>
+                    <!--创建新聊天图标-->
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20px " class="custom-svg"
+                             onclick="newchat()">
+                            <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                            <path d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z"/>
+                        </svg>
+                    </a>
+                </div>
+                <button class="openbtn" id='openbtn' onclick="toggleSidebar()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="right-container3" id="right-container3">
+                    <div class="chat-box" id="chat-box">
+                        <div class="message bot-message" style="margin-top: 8%;">
+                            <i class="icon fas fa-robot"></i>筠筠姐
+                            <br>
+                            <p>Hello!
+                                作为18岁的筠筠姐，我充满自豪地说，我已经在生活中学习了许多知识，并且掌握了琴棋书画等多种技能。您可以询问我一些问题，我会尽我所能为您解答！</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="input-container" id="input-container">
+                <div class="input-container1" id="input-container1">
+                    <input type="text" id="user-input" class="inputClass" placeholder="Type your message..."
+                           onkeydown="handleKeyDown(event)">
+                    <button id="sendButton" class="buttonClass" onclick="sendMessage()"><i
+                            class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <span>如有问题请反馈 狗哥，QQ:694955297</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let isAnswering = false; /*用来标记机器人是否正在回答问题的变量*/
+    document.addEventListener("DOMContentLoaded", function () {
+        checkInputValidity();  //检查输入框状态
+        // 监听输入框的输入事件
+        document.getElementById("user-input").addEventListener("input", checkInputValidity);
+    });
+
+
+    // 检查输入框内容是否为空，并设置发送按钮状态
+    function checkInputValidity() {
+        // 自动滚动页面到底部
+        scrollChatToBottom()
+        var userInput = document.getElementById("user-input").value.trim();
+        var sendButton = document.getElementById("sendButton");
+
+        // 定义默认颜色和灰色背景颜色
+        var defaultColor = "#4caf50";
+        var disabledColor = "#ccc";
+
+        // 检查输入框内容是否为空，以及是否正在回答，并设置发送按钮状态和背景颜色
+        if (userInput === "") {
+            // 输入框为空，禁用发送按钮并设置为灰色
+            sendButton.disabled = true;
+            sendButton.style.backgroundColor = disabledColor;
+        } else if (sendButton.style.backgroundColor === "rgb(204, 204, 204)") {
+            // 输入框不为空且发送按钮的背景颜色为灰色，启用发送按钮并设置为默认颜色
+            sendButton.disabled = false;
+            sendButton.style.backgroundColor = defaultColor;
+        }
+
+    }
+
+    // 保存 interval 的 ID，以便后续取消
+    var displayInterval; // 全局变量
+    //发送消息函数
+    async function sendMessage() {
+        var userInput = document.getElementById("user-input").value;
+        sendButton = document.getElementById("sendButton");
+
+        if (isAnswering) {
+            clearInterval(displayInterval); // 停止逐字显示机器人回答的内容
+            console.log(displayInterval);
+            isAnswering = false; // 将机器人回答状态设置为 false
+            // 修改发送按钮图标为发送图标
+            sendButton.style.backgroundColor = "#4caf50";  //改图标为绿颜色
+            sendButton.innerHTML = '<i class="fas fa-paper-plane"></i>'; //改回发送图标
+            checkInputValidity(); /*检查输入框状态*/
+        } else {
+            if (userInput.trim() !== "") {
+                document.getElementById("user-input").value = ""; // Clear input field
+                appendMessage_user("user", userInput);
+
+                isAnswering = true; /*表示机器人正在回答消息*/
+                //checkInputValidity(); /*马上检查输入框状态*/
+
+                sendButton.style.backgroundColor = "black";  //改图标颜色
+                sendButton.innerHTML = '<i class="fas fa-stop"></i>'; //改图标
+
+                /*先显示机器人图标*/
+                var messageDiv_ai = appendMessage_ai("bot");
+                var messageParagraph_ai = document.createElement("p"); // Create paragraph for bot response
+                messageDiv_ai.appendChild(messageParagraph_ai); // Append paragraph to message div
+
+                scrollChatToBottom(); // 滚动到聊天框底部
+                try {
+                    /*逐字显示机器人内容*/
+                    var index = 0;
+                    var botResponse = await generateBotResponse(userInput);
+                    if (isAnswering) { //如果用户没有点击停止按钮
+                        displayInterval = setInterval(function () {
+                            if (index < botResponse.length) {
+                                messageParagraph_ai.textContent += botResponse.charAt(index);
+                                index++;
+                            } else {
+                                clearInterval(displayInterval); /*停止定时器*/
+                                scrollChatToBottom(); // 滚动到底部
+                                isAnswering = false; /*表示机器人回答完毕*/
+
+                                // 修改发送按钮图标为发送图标
+                                sendButton.style.backgroundColor = "#4caf50";  //改图标为绿颜色
+                                sendButton.innerHTML = '<i class="fas fa-paper-plane"></i>'; //改回发送图标
+                                checkInputValidity(); /*检查输入框状态*/
+                            }
+                        }, 50); // Adjust the interval duration as needed
+                    }
+
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+            scrollChatToBottom(); // 滚动到底部
+        }
+    }
+
+    /*自动滚动窗口*/
+    function scrollChatToBottom() {
+        var rightContainer3 = document.getElementById("right-container3");
+        rightContainer3.scrollTop = rightContainer3.scrollHeight; // 将滚动条滚动到底部
+    }
+
+    /*添加机器人图标*/
+    function appendMessage_ai(sender) {
+        /*父类容器*/
+        var chatBox = document.getElementById("chat-box");
+        var messageDiv = document.createElement("div");
+        /*这里是编辑对话框的类名*/
+        messageDiv.classList.add("message");
+        messageDiv.classList.add(sender + "-message");
+
+        /*这里是编辑对话框的内容*/
+        var message_icon = "<i class='icon fas fa-robot'></i>" + "筠筠姐" + "<br>";
+        messageDiv.innerHTML = message_icon;
+
+        /*父类容器添加子元素*/
+        chatBox.appendChild(messageDiv);
+        scrollChatToBottom();  /*屏幕滚动到底部*/
+        return messageDiv;
+    }
+
+
+    //添加显示用户提问的信息
+    function appendMessage_user(sender, message) {
+        /*父类容器*/
+        var chatBox = document.getElementById("chat-box");
+        var messageDiv = document.createElement("div");
+        /*这里是编辑对话框的类名*/
+        messageDiv.classList.add("message");
+        messageDiv.classList.add(sender + "-message");
+        /*这里是编辑对话框的内容*/
+        var messageContent = "<i class='icon " + (sender === "user" ? "fas fa-user" : "fas fa-robot") + "'></i>" + (sender === "user" ? "你" : "筠筠姐") + "<br>" + "<p>" + message + "</p>";
+        messageDiv.innerHTML = messageContent;
+
+        /*父类容器添加子元素*/
+        chatBox.appendChild(messageDiv);
+        chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+
+        // 添加编辑按钮
+        if (sender === "user") {
+            var editIcon = document.createElement("i");
+            editIcon.classList.add("icon", "fas", "fa-pen");
+            // 添加 margin-top 样式
+            editIcon.style.marginLeft = "20px";
+
+            // 设置图标的大小
+            editIcon.style.fontSize = "13px"; // 例如设置为24像素大小
+
+            editIcon.onclick = function () {
+                editMessage(messageDiv); // 修正这里传递的参数
+            };
+            messageDiv.appendChild(editIcon);
+        }
+        scrollChatToBottom();  /*屏幕滚动到底部*/
+    }
+
+    /*点击用户对话中编辑按钮时*/
+    function editMessage(messageDiv) {
+        var messageParagraph = messageDiv.querySelector("p");
+        var originalContent = messageParagraph.innerHTML; // 保存原始内容
+
+        // 创建按钮容器
+        var buttonContainer = document.createElement("div");
+        buttonContainer.style.display = "flex"; // 将按钮容器设置为 flex 布局
+        buttonContainer.style.justifyContent = "center"; // 将按钮容器中的内容在水平方向上居中对齐
+
+        // 添加保存按钮
+        var saveButton = document.createElement("button");
+        saveButton.textContent = "保存并提交";
+        saveButton.id = "saveButton"; // 设置按钮的 ID
+        saveButton.onclick = function () {
+            // 给当前编辑的对话框添加一个标识类名
+            messageDiv.classList.add("edited-message");
+
+            // 获取编辑框内的数据
+            var editedContent = messageParagraph.textContent;
+            // 调用保存并提交函数
+            saveAndSubmit(editedContent, saveButton, cancelButton);
+        };
+
+        // 添加取消按钮
+        var cancelButton = document.createElement("button");
+        cancelButton.textContent = "取消";
+        cancelButton.id = "cancelButton";
+        cancelButton.onclick = function () {
+            // 恢复原始内容
+            messageParagraph.innerHTML = originalContent;
+            // 隐藏按钮
+            saveButton.style.display = "none";
+            cancelButton.style.display = "none";
+        };
+
+        // 将按钮添加到按钮容器中
+        buttonContainer.appendChild(saveButton);
+        buttonContainer.appendChild(cancelButton);
+
+        // 将按钮容器添加到 DOM 中
+        // 这里假设您有一个名为 messageDiv 的父容器
+        messageDiv.appendChild(buttonContainer);
+
+
+        messageParagraph.contentEditable = true;
+        messageParagraph.focus(); // 让编辑框获得焦点
+
+        // 将光标移到文本末尾
+        var range = document.createRange();
+        range.selectNodeContents(messageParagraph);
+        range.collapse(false); // 将光标移动到末尾
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        // 设置光标颜色为黑色
+        messageParagraph.style.caretColor = "black";
+
+        // 移除编辑框的外边框
+        messageParagraph.style.outline = "none";
+    }
+
+    // 保存并提交按钮的函数
+    function saveAndSubmit(content, saveButton, cancelButton) {
+        // 隐藏按钮
+        saveButton.style.display = "none";
+        cancelButton.style.display = "none";
+
+        // 将编辑的内容填充到发送框
+        document.getElementById("user-input").value = content;
+        // 清空消息对话框元素之后的内容
+        clearChat();
+        // 调用发送函数
+        sendMessage();
+    }
+
+    /*清除编辑的对话框元素之后的所有内容的函数*/
+    function clearChat() {
+        var chatBox = document.getElementById("chat-box");
+        var messageDivs = chatBox.querySelectorAll(".message");
+        var foundEditedMessage = false;
+
+        // 遍历所有消息对话框元素
+        messageDivs.forEach(function (messageDiv) {
+            // 如果找到编辑的对话框，标记后续的消息为编辑后的消息
+            if (messageDiv.classList.contains("edited-message")) {
+                foundEditedMessage = true;
+            }
+            // 如果已找到编辑的对话框，则移除后续的消息
+            if (foundEditedMessage) {
+                messageDiv.remove();
+            }
+        });
+    }
+
+    /*生成机器人的回答：和向后端发送请求*/
+    function generateBotResponse(userInput) {
+        return fetch('/get_answer', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({userInput: userInput})
+        })
+            .then(response => response.json())
+            .then(data => {
+                // 在这里处理从后端接收到的数据
+                console.log("AI response:", data.botResponse);
+                return data.botResponse;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                throw error; // 抛出错误，以便外部代码能够捕获并处理它
+            });
+    }
+
+    /*修改界面样式*/
+    window.onload = function () {
+        var openbtnIcon = document.querySelector(".openbtn .fas");
+        var openbtn = document.getElementById('openbtn');
+        var topNavbar = document.getElementById("top-navbar");
+        var closebtn = document.getElementById('close-btn');
+
+        // 检查屏幕宽度，设置初始按钮图标
+        if (window.matchMedia("(max-width: 768px)").matches) {
+            //这里是小屏幕
+            openbtn.style.display = "none";
+            topNavbar.style.display = "block";
+            closebtn.style.display = "block";
+
+            // 小屏幕下，默认按钮图标为向右箭头
+            //openbtnIcon.classList.add("fa-chevron-right");
+        } else {
+            //这里是大屏幕
+            openbtn.style.display = "block";  /**/
+            topNavbar.style.display = "none";
+            closebtn.style.display = "none";
+            // 大屏幕下，默认按钮图标为向左箭头
+            openbtnIcon.classList.add("fa-chevron-left");
+
+        }
+
+        // 监听屏幕尺寸变化，根据需要更新按钮图标
+        window.addEventListener("resize", function () {
+            if (window.matchMedia("(max-width: 768px)").matches) {
+                /*这里是小屏幕*/
+                openbtn.style.display = "none"; /*隐藏侧边栏按钮*/
+                topNavbar.style.display = "block";/*出现顶部导航框*/
+                closebtn.style.display = "block";/*打开侧边栏关闭按钮*/
+
+                // 切换到小屏幕时，按钮图标变为向右箭头
+                //openbtnIcon.classList.remove("fa-chevron-left");
+                //openbtnIcon.classList.add("fa-chevron-right");
+            } else {
+                openbtn.style.display = "block";/*显示侧边栏按钮*/
+                topNavbar.style.display = "none";/*隐藏顶部导航框*/
+                closebtn.style.display = "none";/*隐藏侧边栏关闭按钮*/
+
+                // 切换到大屏幕时，按钮图标变为向左箭头
+                openbtnIcon.classList.remove("fa-chevron-right");
+                openbtnIcon.classList.add("fa-chevron-left");
+            }
+        });
+    };
+
+    /*只要是点击非侧边栏(left-container1)区域都可以关闭侧边栏*/
+    function handleClick(event) {
+        var leftContainer1 = document.getElementById('left-container1');
+        // 检查点击的目标元素是否在 left-container1 内部
+        if (!leftContainer1.contains(event.target)) {
+            // 执行您想要的点击事件操作
+            // 示例：关闭侧边栏
+            toggleSidebar();
+        }
+    }
+
+    // 收起/展开侧边栏
+    function toggleSidebar() {
+        var leftContainer = document.getElementById("left-container");
+        var openbtnIcon = document.querySelector(".openbtn .fas");
+
+        //如果是小屏幕
+        if (window.matchMedia("(max-width: 768px)").matches) {
+            console.log("进来了修改小屏幕");
+            leftContainer.classList.toggle("open")
+        } else {//如果是大屏幕
+            // 切换侧边栏状态为关闭
+            leftContainer.classList.toggle("closed");
+        }
+
+        // 等待一段时间后根据左边容器的展开状态来显示或隐藏覆盖层
+        setTimeout(() => {
+            if (leftContainer.classList.contains('open')) {
+                overlay.style.display = "block";
+            } else {
+                overlay.style.display = "none"
+            }
+        }, 100); // 这里的 500 毫秒可以根据需要调整，以确保侧边栏完全展开后再显示覆盖层
+
+
+        // 切换按钮图标
+        if (leftContainer.classList.contains("closed")) {
+            // 侧边栏收起时，按钮图标变为向右箭头
+            openbtnIcon.classList.remove("fa-chevron-left");
+            openbtnIcon.classList.add("fa-chevron-right");
+        } else {
+            // 侧边栏展开时，按钮图标变为向左箭头
+            openbtnIcon.classList.remove("fa-chevron-right");
+            openbtnIcon.classList.add("fa-chevron-left");
+        }
+    }
+
+    /*创建新聊天界面*/
+    function newchat() {
+        var chatBox = document.getElementById("chat-box");
+        var messageDivs = chatBox.querySelectorAll(".message");
+        var isFirstMessage = true; // 用于标记是否是第一条消息
+
+        // 遍历所有消息对话框元素
+        messageDivs.forEach(function (messageDiv) {
+            // 如果不是第一条消息，则移除该消息
+            if (!isFirstMessage) {
+                messageDiv.remove();
+            }
+            // 标记第一条消息后，将 isFirstMessage 设置为 false，以便后续消息被移除
+            isFirstMessage = false;
+        });
+        isAnswering = false;  //终止机器人回答
+        sendMessage();//调用发送信息更换按钮图标以及停止机器人回答状态
+        checkInputValidity();  //重置输入框状态
+
+        //告诉后端清空维护的上下文消息
+        fetch('/clear_messages', {
+            method: 'POST',
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Messages cleared successfully');
+                } else {
+                    console.error('Failed to clear messages');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+
+    /*回车触发发送消息*/
+    function handleKeyDown(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // 防止默认的换行行为
+            document.getElementById("sendButton").click(); // 模拟点击发送按钮
+        }
+    }
+
+</script>
+</body>
+</html>

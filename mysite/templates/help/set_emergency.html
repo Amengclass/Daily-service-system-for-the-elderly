@@ -22,74 +22,81 @@
         <!-- 这里将显示添加的紧急联系人列表 -->
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     var globalName = ""; // 全局变量用于存储姓名
     var globalPhone = ""; // 全局变量用于存储电话号码
+    /*页面加载成功就执行ajax请求获取紧急联系人列表*/
     $(document).ready(function () {
-        // 页面加载时自动加载用户紧急联系人列表
         $.ajax({
             type: 'GET',
             url: '/help/get_emergency/{{ user_id }}',
             success: function (response) {
-                /*如果返回联系人数组才会运行，否则不会有任何反应*/
-                if (Array.isArray(response)) {
-                    console.log("紧急联系人:" + response)
-                    // 显示用户的紧急联系人列表
+                console.log(response)
+                var status = response.status;
+                var data = response.data; /*联系人列表*/
+                if (status === 'success') {
+                    // 创建用户的紧急联系人列表
                     var contactListDiv = $('#contactList');
-                    response.forEach(function (contact) {
+                    data.forEach(function (contact) {
+                        /*紧急联系人列表项*/
                         var contactItemDiv = $('<div class="contactItem">');
                         var deleteButton = $('<span class="deleteButton">[删除]</span>');
                         deleteButton.click(function () {
-                            deleteContact("刷新", contactItemDiv);
+                            deleteContact(contact.name, contactItemDiv);
                         });
-                        globalName = contact.name;
-                        globalPhone = contact.phone;
+                        /*给每一个紧急联系人列表项添加联系人信息和删除键*/
                         contactItemDiv.append('姓名：' + contact.name + '，电话号码：<span class="phone">' + contact.phone + '</span>');
                         contactItemDiv.append(deleteButton);
+
+                        /*最后将联系人列表项加入联系人列表*/
                         contactListDiv.append(contactItemDiv);
                     });
-                } else { /*不是数组*/
-                    // 处理response不是数组的情况，例如空列表或者其他类型的数据
-                    console.log("这里是set_emergency.html界面的输出:没有任何紧急联系人列表！");
                 }
             },
             error: function (xhr, status, error) {
-                // 请求失败，输出错误信息
+                // 处理请求失败情况
                 console.error('请求失败', error);
             }
         });
     });
 
+    // 获取表单元素
+    var form = document.getElementById('emergencyContactForm');
+
     // 监听表单提交事件
-    $('#emergencyContactForm').submit(function (event) {
+    form.addEventListener('submit', function (event) {
         event.preventDefault(); // 阻止表单默认提交行为
+        console.log("阻止了表单的提交！");
         // 获取表单数据
-        globalName = $('#name').val();
-        globalPhone = $('#phone').val();
+        var name = $('#name').val();
+        var phone = $('#phone').val();
+        console.log("name: " + name);
+        console.log("phone: " + phone);
         // 发送 AJAX 请求
         $.ajax({
             type: 'POST',
-            url: '/help/save_emergency/{{ user_id }}',
+            url: '/help/add_emergency/{{ user_id }}',
             data: {
-                name: globalName,
-                phone: globalPhone
+                name: name,
+                phone: phone
             },
             success: function (response) {
-                console.log(response)
-                if (response === "未登录") {
+                console.log(response);
+                if (response.status === "未登录") {
                     alert("该功能需要登录后使用！");
-                } else if (response === "相同姓名的联系人已存在") {
+                } else if (response.status === "联系人已存在") {
                     alert("该联系人已存在，请勿重复添加！");
                 } else {
                     // 在页面下方显示添加的名单
                     var contactListDiv = $('#contactList');
                     var contactItemDiv = $('<div class="contactItem">');
                     var deleteButton = $('<span class="deleteButton">[删除]</span>');
+                    deleteButton.data('name', name); // 存储联系人名称
                     deleteButton.click(function () {
-                        deleteContact("不刷新", contactItemDiv);
+                        deleteContact($(this).data('name'), contactItemDiv);
                     });
-                    contactItemDiv.append('姓名：' + globalName + '，电话号码：<span class="phone">' + globalPhone + '</span>');
+                    contactItemDiv.append('姓名：' + name + '，电话号码：<span class="phone">' + phone + '</span>');
                     contactItemDiv.append(deleteButton);
                     contactListDiv.append(contactItemDiv);
                 }
@@ -104,24 +111,44 @@
         });
     });
 
-    // 删除紧急联系人
-    function deleteContact(method, contactItemDiv) {
+    // 删除联系人
+    function deleteContact(contactName, contactItemDiv) {
         $.ajax({
             type: 'POST',
             url: '/help/delete_emergency/{{ user_id }}',
             data: {
-                name: globalName,
+                name: contactName
+            },
+            success: function (response) {
+                console.log(response);
+                // 删除成功后，从页面中移除相应的联系人条目
+                if (response.status === "删除成功") {
+                    contactItemDiv.remove();
+                } else {
+                    // 如果删除失败，则根据实际情况进行处理
+                    console.error('删除失败', response);
+                }
+            },
+            error: function (xhr, status, error) {
+                // 请求失败，输出错误信息
+                console.error('请求失败', error);
+            }
+        });
+    }
+
+    // 删除紧急联系人
+    function deleteContact(name, contactItemDiv) {
+        $.ajax({
+            type: 'POST',
+            url: '/help/delete_emergency/{{ user_id }}',
+            data: {
+                name: name,
             },
             success: function (response) {
                 console.log(response)
-            },
-            success: function (response) {
-                console.log(response)
-                if (response === "删除成功") {
+                if (response.status === "删除成功") {
                     // 删除前端界面对应的紧急联系人项
                     $(contactItemDiv).remove();
-                    if (method === "刷新")
-                        location.reload();
                 } else {
                     alert("删除失败，请稍后重试！");
                 }
@@ -132,7 +159,6 @@
             }
         });
     }
-
 </script>
 </body>
 </html>
