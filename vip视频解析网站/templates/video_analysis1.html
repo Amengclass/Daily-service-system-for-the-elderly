@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>
+        小狗不emo 视频观影网站 </title>
+    <meta name="keywords" content="视频解析,B6"/>
+    <meta name="description"
+          content="小狗不emo 视频解析支持爱奇艺、腾讯视频、优酷、芒果TV、乐视视频、搜狐视频、bilibili哔哩哔哩（B站）、AcFun弹幕视频网（A站）等视频解析"/>
+    <meta name=viewport content="width=device-width,anicital-scale=1">
+    <link rel="icon" type="image/png" href="../static/video_analysis2_files/B6.png">
+    <link rel="stylesheet" href="../static/video_analysis1_files/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../static/video_analysis1_files/css/style.css"/>
+</head>
+<body>
+<header class="navbar-fixed-top">
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- 手机自适应样式 -->
+                <div class="navbar-header">
+                    <!--logo图标-->
+                    <a class="navbar-brand logo" href="#"></a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<!--视频box区域-->
+<div class="container-fluid video-box">
+    <div class="container">
+        <!--输入框部分-->
+        <div class="url-box" style="margin-top: 10px;">
+            <!--输入片名-->
+            <div class="input-group">
+                <input type="text" onfocus="this.select()" id="name" class="form-control url-text"
+                       aria-label="Text input with segmented button dropdown"
+                       placeholder="请输入你想要看的视频名字，点击播放即可！"
+                       title="请输入你想要看的视频名字，点击播放即可！" autocomplete="off">
+                <div class="input-group-addon"><!--搜索视频接口-->
+                    <select class="url-c url-text" title="如发现视频无法正常播放请尝试更换视频线路！" id="jx">
+                        </option>
+                        <option value="http://www.zrxgnxddxw.com/search.php?searchword=" selected>
+                            默认
+                        </option>
+                        </option>
+                        <option value="http://www.ruguojiaoyu.com/search.php?searchword=">
+                            线路一
+                        </option>
+                        <option value="https://rebozj.pro/search/-------------.html?wd=">
+                            线路三<!--:热播之家(无广)-->
+                        </option>
+                        <!--                        <option value="https://www.xmxone.cn/vodsearch/-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;.html?wd=">-->
+                        <!--                            线路二:MXONE(无广)-->
+                        <!--                        </option>-->
+                        <!--                        <option value="https://www.139ys.com/vodsearch/-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;.html?wd=">-->
+                        <!--                            线路四：139影视(无广)-->
+                        <!--                        </option>-->
+                        <!--                        <option value="https://www.dymiao.com/sou/-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;.html?wd=">-->
+                        <!--                            线路五:电影喵(无广)-->
+                        <!--                        </option>-->
+                        <option value="https://cddys.me/vodsearch/-------------.html?wd=">
+                            无法播放时：<!--臭蛋蛋影视(轻广)-->
+                        </option>
+                        <option value="https://7080.wang/so.html?id=0&wd=">
+                            请切换接口：<!--7080网(无广)-->
+                        </option>
+                        <!--                        <option value="https://nanflix.net/index.php/vod/search.html?wd=">-->
+                        <!--                            线路八:NANFLIX(无广)-->
+                        <!--                        </option>-->
+                        <!--                        <option value="https://rebozj.pro/search/-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;.html?wd=">-->
+                        <!--                            线路九:热播之家(无广)-->
+                        <!--                        </option>-->
+                        <option value="https://mcoun.com/vodsearch.html?wd=">
+                            清风影院<!--(会跳转至:清风影院)-->
+                        <option value="https://www.zxzjhd.com/vodsearch/-------------.html?wd=">
+                            线路十<!--：海外剧专用-->
+                        </option>
+                    </select>
+                </div>
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default btn-play" title="点击开始搜索并开始播放"
+                            onclick="search()">搜索播放
+                    </button>
+                </div>
+            </div>
+<!----------------------------解析部分的代码链接-------------------------------->
+<!--            输入链接-->
+<!--            <div class="input-group" style="margin-top: 10px;">-->
+<!--                <input type="text" onfocus="this.select()" id="url" class="form-control url-text"-->
+<!--                       aria-label="Text input with segmented button dropdown"-->
+<!--                       placeholder="请复制你想要看的视频网址，粘贴到此处点击播放即可！"-->
+<!--                       title="请复制你想要看的视频网址，粘贴到此处点击播放即可！" autocomplete="off">-->
+<!--                <div class="input-group-addon">-->
+<!--                    <select class="url-c url-text" title="如发现视频无法正常播放请尝试更换视频线路！" id="jk">-->
+<!--                        <option value="https://jx.jsonplayer.com/player/?url=" selected>-->
+<!--                            默认一-->
+<!--                        </option>-->
+<!--                        </option>-->
+<!--                        <option value="https://jx.m3u8.tv/jiexi/?url=">-->
+<!--                            线路二-->
+<!--                        </option>-->
+<!--                        <option value="https://jx.xyflv.cc/?url=">-->
+<!--                            线路三-->
+<!--                        </option>-->
+<!--                        <option value="https://jx.xmflv.com/?url=">-->
+<!--                            线路四-->
+<!--                        </option>-->
+<!--                        <option value="https://jx.qqwtt.com/?url=">-->
+<!--                            线路五-->
+<!--                        </option>-->
+<!--                        <option value="https://jx.we-vip.com/?url=">-->
+<!--                            无法播放时-->
+<!--                        </option>-->
+<!--                        <option value="https://jx.4kdv.com/?url=">-->
+<!--                            请切换接口-->
+<!--                        </option>-->
+<!--                        <option value="https://api.jiexi.la/?url=">-->
+<!--                            线路八-->
+<!--                        </option>-->
+<!--                        <option value="https://jx.aidouer.net/?url=">-->
+<!--                            线路九-->
+<!--                        </option>-->
+<!--                        <option value="https://www.playm3u8.cn/jiexi.php?url=">-->
+<!--                            线路十-->
+<!--                        </option>-->
+<!--                        <option value="https://www.8090g.cn/jiexi/?url=">-->
+<!--                            线路十一-->
+<!--                        </option>-->
+<!--                        <option value="ttps://jx.yangtu.top/?url=">-->
+<!--                            线路十二-->
+<!--                        </option>-->
+<!--                        </option>-->
+<!--                        <option value="https://jx.2s0.cn/player/?url=">-->
+<!--                            线路十三-->
+<!--                        </option>-->
+<!--                        <option value="">-->
+<!--                            线路十一-->
+<!--                        </option>-->
+
+
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div class="input-group-btn">-->
+
+<!--                    <button type="button" class="btn btn-default btn-play" title="点击开始解析并开始播放"-->
+<!--                            onclick="play()">解析播放-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+
+        <!--视频播放区域左边---->
+        <div class="tit-name">
+            <span>正在播放:</span>
+             <h1 id="tittext" style='margin-left:10px'>欢迎使用 小狗不emo 观影</h1>
+        </div>
+        <!--视频播放区域右边提示界面-->
+        <div class="shipin">
+            <div class="shipin_left">
+                <iframe id="palybox" style="height: 100%;"
+                        src="https://jx.jsonplayer.com/player/?url=https://v.qq.com/x/cover/mzc002005sbknaw/i0047dv17qb.html"
+                        allowtransparency="true" frameborder="0" scrolling="yes" allowfullscreen="true"
+                        allowtransparency="true" target="_self"></iframe>
+            </div>
+
+            <!--视频播放区域右边-->
+            <div class="shipin_right">
+                <div class="tit-gg" style="color: #FEED8A;">
+                    <marquee with="100%" behavior="scroll" onmouseover=this.stop() onmouseout=this.start()
+                             scrollamount="4">视频解析需耐心等待数秒；如视频未自动播放，请手动点击播放；如视频播放异常，请刷新或切换线路、更换不同平台视频网址播放！
+                    </marquee>
+                </div>
+
+                <!--右边栏提示界面-->
+                <div class="搜索视频">
+                    <p style="font-size: 12px; color:#bbb; margin-top:10px;">
+                        视频搜索方法：在输入框内输入想要观看的片名，再点击“搜索片名”即可搜索到视频，搜索结果会自动显示在下方；
+                </div>
+                <div class="解析视频" style="margin-top: 20px;">
+                    <p style="font-size: 12px; color:#bbb; margin-top:10px;">
+                        (因广告过多已经暂停)视频解析方法：使用浏览器进入视频网站，打开想要播放的视频，然后从浏览器的地址栏复制视频链接；回到本站在输入框内粘贴视频链接，再点击“解析播放”等待数秒（播放窗口显示视频时长）即可播放。---支持手机端和电脑端---</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--平台logo	-->
+<div class="container-fluid logo-box">
+    <div class="container ">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="title-tit">
+                    <h4>现已支持网站</h4>
+                    <p>
+                        支持爱奇艺、腾讯视频、优酷、芒果TV、乐视视频、搜狐视频、bilibili哔哩哔哩（B站）、AcFun弹幕视频网（A站）等vip会员视频免费观看</p>
+                </div>
+            </div>
+        </div>
+        <!--第一行-->
+        <div class="row">
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a href="http://www.iqiyi.com/" target="_blank" title="爱奇艺会员">
+                        <img class="img-responsive" src="../static/video_analysis1_files/img/logo/iqiyilogo.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://v.qq.com/" target="_blank" title="腾讯会员中心">
+                        <img class="img-responsive" src="../static/video_analysis1_files/img/logo/qqlogo.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://www.youku.com/" target="_blank" title="优酷会员中心">
+                        <img class="img-responsive" src="../static/video_analysis1_files/img/logo/youkulogo.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://www.mgtv.com/" target="_blank" title="芒果会员中心">
+                        <img class="img-responsive" src="../static/video_analysis1_files/img/logo/hunantvlogo.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a href="http://www.le.com/" target="_blank" title="乐视会员中心">
+                        <img class="img-responsive" src="../static/video_analysis1_files/img/logo/letvlogo.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a href="http://www.tudou.com/" target="_blank" title="土豆会员中心">
+                        <img class="img-responsive" src="../static/video_analysis1_files/img/logo/tudoulogo.png">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--第一行结束-->
+        <!--第二行开始-->
+        <div class="row">
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a href="http://www.baofeng.com/" target="_blank" title="暴风会员">
+                        <img class="img-responsive" src="../static/video_analysis1_files/img/logo/baofeng.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://vip.1905.com/" target="_blank" title="1905电影网视频">
+                        <img class="img-responsive" src="../static/video_analysis1_files/img/logo/1905logo.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://www.kankan.com/" target="_blank" title="天天看看">
+                        <img class="img-responsive" src="../static/video_analysis1_files/img/logo/kankan.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://www.pptv.com/" target="_blank" title="PPTV聚力">
+                        <img class="img-responsive" src="../static/video_analysis1_files/img/logo/pptv.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a href="http://www.yinyuetai.com/" target="_blank" title="音悦台MV">
+                        <img class="img-responsive" src="../static/video_analysis1_files/img/logo/yinyuetailogo.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a href="http://www.fun.tv/" target="_blank" title="风行视频">
+                        <img class="img-responsive" src="../static/video_analysis1_files/img/logo/fengxing.png">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--第二行结束-->
+        <!--第三行开始-->
+        <div class="row">
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://www.wasu.cn/" target="_blank" title="WASU华数视频">
+                        <img class="img-responsive" src="../static/video_analysis1_files/img/logo/wasulogo.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://video.sina.com.cn/" target="_blank" title="新浪视频">
+                        <img class="img-responsive" src="../static/video_analysis1_files/img/logo/sinalogo.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a href="https://film.sohu.com/" target="_blank" title="搜狐视频">
+                        <img class="img-responsive" src="../static/video_analysis1_files/img/logo/sohulogo.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://tv.cctv.com/" target="_blank" title="央视网">
+                        <img class="img-responsive" src="../static/video_analysis1_files/img/logo/cntvlogo.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2 ">
+                <div class="logo-lie">
+                    <a href="http://www.acfun.cn/" target="_blank" title="Ac弹幕网">
+                        <img class="img-responsive" src="../static/video_analysis1_files/img/logo/acfun.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <div class="logo-lie">
+                    <a href="http://www.bilibili.com/" target="_blank" title="哔哩哔哩">
+                        <img class="img-responsive" src="../static/video_analysis1_files/img/logo/bilibili.png">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--第三行结束-->
+        <!---->
+    </div>
+</div>
+<div class="cy-box">
+    <div class="container">
+        <!--PC和WAP自适应版-->
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+        var winHeight = $(document).scrollTop();
+
+        $(window).scroll(function () {
+            var scrollY = $(document).scrollTop();// 获取垂直滚动的距离，即滚动了多少
+
+            if (scrollY > 200) { //如果滚动距离大于550px则隐藏，否则删除隐藏类
+                $('.left_ads').addClass('hiddened');
+            } else {
+                $('.left_ads').removeClass('hiddened');
+            }
+
+            if (scrollY > winHeight) { //如果没滚动到顶部，删除显示类，否则添加显示类
+                $('.left_ads').removeClass('showed');
+            } else {
+                $('.left_ads').addClass('showed');
+            }
+
+        });
+    });
+</script>
+<script type="text/javascript">
+    function hehe() {
+        if ((window.console && (console.firebug || console.table && /firebug/i.test(console.table()))) || (typeof opera == 'object' && typeof opera.postError == 'function' && console.profile.length > 0)) {
+            fuckyou();
+        }
+        if (typeof console.profiles == "object" && console.profiles.length > 0) {
+            fuckyou();
+        }
+    }
+
+    hehe();
+    window.onresize = function () {
+        if ((window.outerHeight - window.innerHeight) > 200)
+            //判断当前窗口内页高度和窗口高度，如果差值大于200，那么呵呵
+            fuckyou();
+    }
+</script>
+<script type="text/javascript" src="../static/video_analysis1_files/js/tv-beipy.js"></script>
+<div id="volume-booster-visusalizer">
+    <div class="sound">
+        <div class="sound-icon"></div>
+        <div class="sound-wave sound-wave_one"></div>
+        <div class="sound-wave sound-wave_two"></div>
+        <div class="sound-wave sound-wave_three"></div>
+    </div>
+    <div class="segments-box">
+        <div data-range="1-20" class="segment"><span></span></div>
+        <div data-range="21-40" class="segment"><span></span></div>
+        <div data-range="41-60" class="segment"><span></span></div>
+        <div data-range="61-80" class="segment"><span></span></div>
+        <div data-range="81-100" class="segment"><span></span></div>
+    </div>
+</div>
+<!-- 添加免责声明 -->
+<footer class="footer">
+    <div class="branding">
+        <!--居中部分-->
+        <hr style="display: block;height: 1px;margin-bottom: 10px;background-color: #a1a1a1;    margin-top: 0px;margin-bottom: 20px;border: 0;">
+        <div class="container footer-tit">
+            <p>
+                声明：本站为非盈利性站点，只提供在线WEB服务，仅供学习交流，拒绝一切商业行为，否者后果自负！所涉及资源均来源于互联网，本站不提供任何视频资源存储，也不参与录制和上传。若无意侵犯了您的版权，请及时联系我们，我们会第一时间核实、回复和处理，谢谢！</p>
+            <p style="color: #e84e4e">管理员邮箱：694955297@qq.com</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // 获取 <iframe> 元素
+    var miniBrowser = document.getElementById('palybox');
+
+    // 监听 <iframe> 中链接的点击事件
+    miniBrowser.contentWindow.document.addEventListener('click', function (event) {
+        // 阻止默认行为，即在整个浏览器中打开链接
+        event.preventDefault();
+
+        // 获取点击的链接的 href 属性值
+        var href = event.target.getAttribute('href');
+
+        // 在当前 <iframe> 中加载新页面
+        miniBrowser.src = href;
+    });
+</script>
+</body>
+</html>

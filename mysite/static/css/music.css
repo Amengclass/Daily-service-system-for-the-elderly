@@ -1,0 +1,189 @@
+User
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    overflow: hidden;
+}
+
+/*标题和搜索栏*/
+h1 {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center; /* 水平居中 */
+}
+
+.search-bar {
+    margin-bottom: 20px;
+    text-align: center; /* 水平居中 */
+}
+
+.container {
+    height: auto; /* 设置容器高度为视窗的75% */
+    width: auto;
+    max-height: 59vh;
+    /* 设置最大高度为视窗高度的80%
+    /*   text-align: center;*/
+    /*   margin: 10px auto; !* 设置上外边距为50像素，左右外边距自动居中 *!*/
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* 当内容超出容器高度时启用垂直滚动条 */
+}
+
+.audio-controls {
+    position: fixed; /* 设置为固定定位 */
+    bottom: 0; /* 位于页面底部 */
+    left: 50%; /* 位于页面水平居中 */
+    transform: translateX(-50%); /* 使用transform属性将元素水平居中 */
+    text-align: center; /* 按钮水平居中 */
+    width: 100%; /* 宽度占满父元素 */
+}
+
+#audioPlayer {
+    display: inline-block; /* 将其设置为行内块元素 */
+    margin: 0 auto 5px; /* 在水平方向上居中并设置下边距为5像素 */
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    margin: 0 5px; /* 设置按钮之间的水平外边距 */
+}
+
+
+input[type="text"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 70%;
+    margin-right: 10px;
+}
+
+
+button:hover {
+    background-color: #d0282e;
+}
+
+#audioPlayer {
+    margin-top: 20px;
+}
+
+
+/* Style for song list */
+#songList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#songList div {
+    padding: 10px;
+    margin: 5px;
+    background-color: #eee;
+    border-radius: 5px;
+    cursor: pointer;
+    -webkit-touch-callout: none; /* 禁止长按链接与图片弹出菜单 */
+    -webkit-user-select: none; /* 禁止用户选择文字 */
+    -khtml-user-select: none; /* 兼容旧版本 Safari */
+    -moz-user-select: none; /* 禁止用户选择文字 */
+    -ms-user-select: none; /* 禁止用户选择文字 */
+    user-select: none; /* 禁止用户选择文字 */
+}
+
+#songList div:hover {
+    background-color: #ddd;
+}
+
+
+.playlist-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.playlist-container li {
+    padding: 10px;
+    margin: 5px;
+    background-color: #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.playlist-container li:hover {
+    background-color: #bbb;
+}
+
+
+#playlistButton:hover {
+    background-color: #d0282e;
+}
+
+/* 播放列表按钮样式 */
+#playlistButton {
+    margin-top: 20px; /* 设置按钮与上方元素的上边距为20像素 */
+    padding: 10px 20px; /* 设置按钮内边距，10像素顶部和底部，20像素左右 */
+    border: none; /* 去除按钮边框 */
+    border-radius: 20px; /* 设置按钮的边框圆角为20像素 */
+    background-color: #4CAF50; /* 设置按钮背景颜色为#4CAF50 */
+    color: white; /* 设置文字颜色为白色 */
+    cursor: pointer; /* 设置鼠标悬停在按钮上时的样式为手型 */
+}
+
+/* 播放列表容器样式 */
+.playlist-container {
+    position: fixed; /* 设置为固定定位 */
+    bottom: 40%; /* 距离底部的距离 */
+    right: 40%; /* 距离右侧的距离 */
+    width: 250px; /* 设置宽度 */
+    max-height: 300px; /* 设置最大高度 */
+    overflow-y: auto; /* 当内容超出容器高度时启用滚动条 */
+    background-color: #eee;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0px 0px 10px rgba(148, 113, 113, 0.1); /* 添加阴影效果 */
+    z-index: 999; /* 设置层级，确保播放列表在其他内容上方 */
+}
+
+#currentSongName {
+    margin-top: 10px; /* 与上方元素的上边距为10像素 */
+    font-size: 18px; /* 字体大小为18像素 */
+    color: #333; /* 文字颜色为深灰色 */
+    text-align: center; /* 水平居中 */
+}
+
+
+/* 在小屏幕上应用不同的样式 */
+@media (max-width: 600px) {
+    .search-bar {
+        margin-bottom: 20px;
+        display: flex; /* 使用 Flexbox 布局 */
+        justify-content: center; /* 水平居中 */
+    }
+
+    .search-bar input[type="text"],
+    .search-bar button {
+        margin: 0 5px; /* 设置输入框和按钮之间的间距 */
+    }
+
+    #audioPlayer {
+        display: inline-block;
+        margin-bottom: 5px;
+    }
+
+    .buttons {
+        justify-content: center;
+        align-items: center; /* 垂直居中 */
+    }
+
+    .buttons button {
+        margin: 0 2px; /* 设置按钮之间的水平间距为10px */
+        font-size: 10px; /* 设置按钮字体大小为10像素 */
+        width: auto; /* 设置按钮宽度为自适应 */
+        height: auto; /* 设置按钮高度为自适应 */
+        writing-mode: horizontal-tb; /* 强制文本水平显示 */
+    }
+}
